@@ -9,5 +9,29 @@ Vue.use(VueRouter)
 
 const routes = [{
     path: '/log',
-    component: Log,
+    component: Log
+},
+{
+    path: '/profil',
+    component: Profil,
+    meta: { requiresAuth: true }
+},
+{
+    path: '/post',
+    component: Post,
+    meta: { requiresAuth: true }
+},
+{
+    path: 'filactu',
+    component: FilActu,
+    meta: { requiresAuth: true }
 }]
+
+const router = new VueRouter({
+    mode: 'history',
+    routes
+})
+
+
+
+export default router
