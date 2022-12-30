@@ -19,9 +19,14 @@ const db = mysql.createConnection({
                 console.log("Base de données créée !");    
              }); 
 
+             db.query("USE Productivity", function(err, result) {
+                if (err) throw err;
+                console.log("Use Productivity");
+            })
+
             }
             
             initialize();
-            
+
             module.exports = db;
             
