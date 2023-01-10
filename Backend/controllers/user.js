@@ -25,15 +25,9 @@ exports.register = async (req,res, next) => {
                 res.status(201).json({message: 'Données enregistrées ! Bravo !'})
             }
         })
-    
-
-        
-        
     } catch (err) {
         res.status(400).json({message: 'Mauvaise requête !'})
-        
     }
-
 }
 
 
@@ -41,12 +35,28 @@ exports.register = async (req,res, next) => {
 exports.login = (req, res, next) =>  {
 
 
-    const requestLog = `SELECT 'email', 'password' FROM Users WHERE 'email' = ${req.body.email}`;
+    const requestLog = `SELECT 'email', 'password' FROM Users WHERE 'email' = ${req.body.email} ?`;
+    const userPassword = `SELECT 'password' FROM Users WHERE 'password' = ${req.body.password}`;
+    const id = `SELECT 'id' FROM Users WHERE 'email' = ${req.body.email} `;
 
-    
-
-
-
-
-
+    db.query(requestLog, (err, result) => {
+        if(!result) {
+            res.status(401).json({message: 'utilisateur introuvable !'})
+        } else {
+            bcrypt.compare(req.body.password, userPassword)
+            .then(valid => {
+                if(!valid) {
+                  return res.status(401).json({message: 'Mot de passe incorrect !'});
+                } else {
+                    res.status(200).json({id:id, token: jwt.sign({id: id},
+                        'HARD_SECRET_TOKEN_ULTIMATE_LOCK_STAR_BLACK_SQUAD',
+                        { expiresIn:'24h'})
+                    })   
+                }
+            })
+            .catch(res.status(500).json({message: 'Erreur serveur !'}))
+        }
+    })
 }
+
+
