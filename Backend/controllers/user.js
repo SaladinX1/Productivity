@@ -36,8 +36,8 @@ exports.login = (req, res, next) =>  {
 
 
     const requestLog = `SELECT 'email', 'password' FROM Users WHERE 'email' = ${req.body.email} ?`;
-    const userPassword = `SELECT 'password' FROM Users WHERE 'password' = ${req.body.password}`;
-    const id = `SELECT 'id' FROM Users WHERE 'email' = ${req.body.email} `;
+    const userPassword = `SELECT 'password' FROM Users WHERE 'password' = '${req.body.password}';`;
+    const id = `SELECT 'id' FROM Users WHERE 'email' = ${req.body.email};`;
 
     db.query(requestLog, (err, result) => {
         if(!result) {
@@ -60,3 +60,19 @@ exports.login = (req, res, next) =>  {
 }
 
 
+exports.deleteUser = (req,res, next) => {
+
+    const deleteUserRequest = `DELETE FROM 'Users' WHERE 'id' = ${req.params.id};`
+
+    db.query(deleteUserRequest, (err, result => {
+        if(!result) {
+            res.status(500).json({message: 'Erreur Serveur !'})
+        } else {
+            res.status(200).json({message: 'Utilisateur supprimé !'})
+        }
+    }))
+
+
+}
+
+exports.putUser
