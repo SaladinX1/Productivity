@@ -75,4 +75,23 @@ exports.deleteUser = (req,res, next) => {
 
 }
 
-exports.putUser
+exports.putUser = (req, res, next) => {
+
+    const id = req.params.id;
+    const pseudo = req.body.pseudo;
+    const email = req.body.pseudo;
+    const password = req.body.password;
+    const pic = req.body.picture;
+
+    const putData = `UPDATE 'Users' SET '${pseudo}', '${email}', '${password}', '${pic}' WHERE 'id' = '${id}';`;
+
+    db.query(putData, (err, result) => {
+        if(!result) {
+            res.status(400).json({message: 'Mauvaise requête !'});
+        } else {
+            res.status(200).json({message: 'Vos données ont été modifiées'})
+        }
+    })
+
+}
+
