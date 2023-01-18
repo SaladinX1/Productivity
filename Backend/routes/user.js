@@ -3,7 +3,7 @@ const router = express.Router();
 
 const userCtrl = require('../controllers/user');
 
-router.post('/registry', userCtrl.register);
-router.post('/connect', userCtrl.login);
-router.put('/putdata', userCtrl.putUser);
-router.delete('/deleteu', userCtrl.deleteUser);
+router.post('/registryuser', userCtrl.register);
+router.post('/connectuser', userCtrl.login);
+router.put('/putuser', userCtrl.putUser);
+router.delete('/deleteuser', userCtrl.deleteUser);
