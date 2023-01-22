@@ -49,7 +49,7 @@ exports.login = (req, res, next) =>  {
                   return res.status(401).json({message: 'Mot de passe incorrect !'});
                 } else {
                     res.status(200).json({id:id, token: jwt.sign({id: id},
-                        'HARD_SECRET_TOKEN_ULTIMATE_LOCK_STAR_BLACK_SQUAD',
+                        process.env.TOKEN,
                         { expiresIn:'24h'})
                     })   
                 }
