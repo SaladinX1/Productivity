@@ -4,18 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "sass": "sass --watch ./sass/main.scss:./css/styles.css --style compressed"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "axios": "^1.2.1",
     "bootstrap": "^5.2.3",
-    "core-js": "^3.26.1",
-    "sass": "^1.56.1",
-    "vue": "^3.2.45",
-    "vue-axios": "^3.5.2",
-    "vue-router": "^4.1.6"
+    "sass": "^1.58.3"
   }
 }
