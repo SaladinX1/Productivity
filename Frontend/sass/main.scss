@@ -2,6 +2,7 @@
     box-sizing: border-box;
     padding: 0;
     margin: 0;
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
 input::-webkit-outer-spin-button,
@@ -9,3 +10,6 @@ input::-webkit-inner-spin-button {
   appearance: none;
   margin: 0;
 }
+
+@import 'pages/home';
+@import 'layouts/form';
