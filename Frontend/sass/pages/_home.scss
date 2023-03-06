@@ -4,7 +4,34 @@
 
 // }
 
-body {
-    background-image: linear-gradient(60deg, orangered, rebeccapurple);
+.home {
+   // background-image: linear-gradient(60deg, rgb(215, 215, 215), rgb(255, 255, 255), rgb(215, 215, 215));
+    margin: 10% auto;
+    position: relative;
+    height: 150vh;
     
+
+    &__pic {
+
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        //background-size: contain;
+    }
+
+        &__brand {
+           position: absolute;
+            top: 10%;
+            left: 28%;
+            font-size: 1.9rem;
+            font-family:'Caveat', Arial, Helvetica, sans-serif;
+            text-align: center;
+            color: white;
+
+            margin: 20px;
+        } 
+
+    
+
 }

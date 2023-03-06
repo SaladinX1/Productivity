@@ -1,17 +1,25 @@
 
 
-form {
+.home__signin, .home__signup {
 
+   position: absolute;
+  //transform: translate(0%, -190%);
+   
+    opacity: 0.5;
     display: flex;
+    position: absolute;
+    top: 35%;
+    left: 35%;
     flex-direction: column;
     justify-content:space-evenly;
     padding: 20px;
+    font-size: 1.5rem;
     margin: 0 auto;
     text-align: center;
     max-width: 400px;
+    font-family: 'Caveat' ,'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     word-wrap: break-word;
-    background-color: aliceblue;
-    border: 2px solid black;
+    background-color: rgb(249, 241, 208);
     border-radius: 10px;
     
 
@@ -82,6 +90,6 @@ form {
 
 } 
 
-.signup {
+.home__signup {
     display: none;
 }
