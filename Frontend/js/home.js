@@ -1,5 +1,5 @@
-const registerForm = document.querySelector('.signup');
-const loginForm = document.querySelector('.signin');
+const registerForm = document.querySelector('.home__signup');
+const loginForm = document.querySelector('.home__signin');
 
 
 
