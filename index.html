@@ -4,11 +4,13 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Caveat&display=swap" rel="stylesheet">
     <title>Productivity - Home</title>
     <link rel="stylesheet" href="/Frontend/css/styles.css" type="text/css">
 </head>
-<body>
-    
+<body class="home" >
+    <!-- class="home" -->
+  
     <header>
 
       
@@ -18,46 +20,66 @@
 
     <main>
 
-        <form class="signup">
+      <!-- <div class="homeForm"> -->
 
-            <h2>Inscription</h2>
+          <img class="home__pic"  src="/Frontend/images/lake_view.jpg" alt="Vue sur grand lac bleu avec un bateau de pêcheurs en son centre">
+        
 
-            <label for="nom"></label>
-            <input id="nom" type="text" placeholder="Nom" name="nom" >
-
-            <label for="prenom"></label>
-            <input id="prenom" type="text" placeholder="Prenom" name="prenom">
-
-            <label for="pseudo"></label>
-            <input id="pseudo" type="text" placeholder="pseudo" name="pseudo">
+            <div class="home__brand" >
+                <h1>Productivity</h1>
+                <h3> Partages tes envies, Améliores ta productivité !</h3>
+            </div>
             
-            <label for="mail"></label>
-            <input id="mail" type="email" name="mail" placeholder="E-mail">
+            <form class="home__signup">
+    
+                <h2>Inscription</h2>
+    
+                <label for="nom"></label>
+                <input id="nom" type="text" placeholder="Nom" name="nom" >
+    
+                <label for="prenom"></label>
+                <input id="prenom" type="text" placeholder="Prenom" name="prenom">
+    
+                <label for="pseudo"></label>
+                <input id="pseudo" type="text" placeholder="pseudo" name="pseudo">
+                
+                <label for="mail"></label>
+                <input id="mail" type="email" name="mail" placeholder="E-mail">
+    
+                <label for="password"></label>
+                <input id="password" type="password" name="password" placeholder="password">
+    
+                <input type="submit" value="Je m'inscris" class="btn__register">
+    
+                <div><a  onclick="dispLogin()" >Déjà Inscris ?</a></div>
+    
+            </form>
+    
+            <form class="home__signin">
+    
+                <h2>Connexion</h2>
+                
+                <label for="mail"></label>
+                <input id="mail" type="email" name="mail" placeholder="E-mail">
+    
+                <label for="password"></label>
+                <input id="password" type="password" name="password" placeholder="password">
+    
+                <input type="submit" value="Se connecter" class="btn__login">
+    
+                <div><a  onclick="dispRegister()" >Créer un compte !</a></div>
+            </form>
 
-            <label for="password"></label>
-            <input id="password" type="password" name="password" placeholder="password">
+      
 
-            <input type="submit" value="Je m'inscris" class="btn__register">
 
-            <div><a  onclick="dispLogin()" >Déjà Inscris ?</a></div>
+</div>
+    
+           
 
-        </form>
-
-        <form class="signin">
-
-            <h2>Connexion</h2>
-            
-            <label for="mail"></label>
-            <input id="mail" type="email" name="mail" placeholder="E-mail">
-
-            <label for="password"></label>
-            <input id="password" type="password" name="password" placeholder="password">
-
-            <input type="submit" value="Se connecter" class="btn__login">
-
-            <div><a  onclick="dispRegister()" >Créer un compte !</a></div>
-        </form>
-
+          
+        
+       
 
     </main>
 
