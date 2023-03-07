@@ -21,7 +21,10 @@
     word-wrap: break-word;
     background-color: rgb(249, 241, 208);
     border-radius: 10px;
-    
+    transition: opacity .300s ease-in;
+    &:hover{
+        opacity: 0.8;
+    }
 
     & input {
         text-align: center;
