@@ -48,8 +48,10 @@
               opacity: 0.4;
                 width: 35%;
                 padding: 30px;
-                transition: opacity .250s ease-out;
+                transform: scale(1);
+                transition: all .250s ease-out;
                 &:hover {
+                    transform: scale(1.05);
                     opacity: 1;
                     cursor: pointer;
                 }
