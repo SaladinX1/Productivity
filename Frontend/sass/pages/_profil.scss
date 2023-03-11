@@ -1,0 +1,50 @@
+.info_user {
+    font-family: 'Caveat', Arial, Helvetica, sans-serif; 
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    &__brand {
+     text-align: center;  
+     color: white; 
+     font-size: 2.1rem;
+    }
+
+
+    &__data {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    &__btn_gestion {
+
+        & button {
+            outline: none;
+            border: none;
+            padding: 5px;
+            border-radius: 10px;
+            background-color: bisque;
+
+
+        }
+        &--deleteAccount {
+            transition: all .250s ease-in-out;
+            :hover {
+                background-color: rgb(255, 106, 131);
+            }
+        }
+
+    }
+}
+
+.header_profil {
+    padding: 50px;
+    background-color: black;
+}
+
+.footer_profil {
+    padding: 50px;
+    background-color: black;
+}
