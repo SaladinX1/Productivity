@@ -1,30 +1,45 @@
-const User = require('../models/user');
+
 const jwt = require('jsonwebtoken');
 const db = require('../database/db.script');
 const bcrypt = require('bcrypt');
 
 exports.register = async (req,res, next) => {
 
-    const { pseudo, email, password} = req.body;
+    //const {nom, prenom, pseudo, mail} = req.body;
+
+   
+
+   const {password: password} = req.body;
 
     try {
         
+
         const salt = await bcrypt.genSalt(5);
         const cryptPass = await bcrypt.hash(password, salt);
 
         const user = {
-            ...req.body, cryptPass
+            ...req.body,
+            password: cryptPass
         }
 
-        const request = 'INSERT INTO Users SET ?';
+        // const request = `INSERT INTO Users ('nom','prenom','pseudo','mail','password') VALUES ('${nom}','${prenom}','${pseudo}','${mail}','${cryptPass}')`;
+        const request = `INSERT INTO Users SET ?`;
+       // const existMail = `SELECT * FROM Users WHERE mail = '${mail}'`;
 
-        db.query(request, user, (err, result) => {
-            if(!result) {
-                res.status(401).json({ message: 'Email déjà pris !'})
-            } else if(result){
+        db.query(request, user,(err, result) => {
+            if(result) {
                 res.status(201).json({message: 'Données enregistrées ! Bravo !'})
+            } else {
+                res.status(401).json({ message: 'Email déjà pris !'})
+                // db.query(request, (err, result) => {
+                //     if(!err) {
+                //     }
+                // })    
             }
+            
         })
+
+
     } catch (err) {
         res.status(400).json({message: 'Mauvaise requête !'})
     }
