@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="/Frontend/css/styles.css" type="text/css">
 </head>
 <body class="home" >
-    <!-- class="home" -->
+
   
     <header>
 
@@ -35,18 +35,23 @@
     
                 <label for="nom"></label>
                 <input id="nom" type="text" placeholder="Nom" name="nom" >
+                <p id="nomErrMsg"></p>
     
                 <label for="prenom"></label>
                 <input id="prenom" type="text" placeholder="Prenom" name="prenom">
+                <p id="prenomErrMsg"></p>
     
                 <label for="pseudo"></label>
                 <input id="pseudo" type="text" placeholder="pseudo" name="pseudo">
-                
+                <p id="pseudoErrMsg"></p>
+
                 <label for="mail"></label>
                 <input id="mail" type="email" name="mail" placeholder="E-mail">
-    
+                <p id="mailErrMsg"></p>
+
                 <label for="password"></label>
                 <input id="password" type="password" name="password" placeholder="password">
+                <p id="passwordErrMsg"></p>
     
                 <input type="submit" value="Je m'inscris" class="btn__register">
     
@@ -58,11 +63,11 @@
     
                 <h2>Connexion</h2>
                 
-                <label for="mail"></label>
-                <input id="mail" type="email" name="mail" placeholder="E-mail">
+                <label for="mailConn"></label>
+                <input id="mailConn" type="email" name="mail" placeholder="E-mail">
     
-                <label for="password"></label>
-                <input id="password" type="password" name="password" placeholder="password">
+                <label for="passwordConn"></label>
+                <input id="passwordConn" type="password" name="password" placeholder="password">
     
                 <input type="submit" value="Se connecter" class="btn__login">
     
