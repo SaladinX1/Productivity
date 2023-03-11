@@ -3,7 +3,7 @@ const http = require('http');
 const server = http.createServer(app);
 
 server.listen(3000, () => {
-    console.log('Congrats , the server is listening on port 3000');
+   // console.log('Congrats , the server is listening on port 3000');
 });
 
 app.use((req, res, next) => {
@@ -12,3 +12,5 @@ app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
     next();
 });
+
+module.exports = app;
