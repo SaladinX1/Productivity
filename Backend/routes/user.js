@@ -8,4 +8,4 @@ router.post('/connectuser', userCtrl.login);
 router.put('/putuser', userCtrl.putUser);
 router.delete('/deleteuser', userCtrl.deleteUser);
 
-module.exports = router;
+module.exports = router
