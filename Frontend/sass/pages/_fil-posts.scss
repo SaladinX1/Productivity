@@ -5,7 +5,18 @@
       position: relative;
     //  height: 150vh;
     //  background-color: rgb(40, 42, 42);
-     
+
+
+     &__headerPicBrand {
+        & img {
+            position: absolute;
+            left: 3%;
+            top: 2%;
+          height: 90px;
+          width: 90px;
+            border-radius: 50px;
+        }
+     }
  
      &__pic {
  
@@ -25,9 +36,9 @@
  
          &__brand {
             position: absolute;
-             top: 10%;
-             right: 23%;
-             font-size: 1.9rem;
+             top: -2%;
+             right: 20%;
+             font-size: 1.8rem;
              font-family:'Caveat', Arial, Helvetica, sans-serif;
              text-align: center;
              color: white;
@@ -38,7 +49,7 @@
          &__blog {
              
               position: absolute;
-             top: 0;
+             top: 6%;
              bottom: 0;
           
             display: flex;
@@ -70,7 +81,70 @@
 
             }
          }
- 
-     
+
+         &__addPostBtn {
+
+    position: fixed;
+    right: 3%;
+    bottom: 5%;
+    font-size: 2.5rem;
+    border-radius: 50px;
+    height: 56px;
+    background-color: white;
+    transform: scale(1);
+    transition: all .250s ease-in-out ;
+            &:hover {
+                background-color: rgb(82, 223, 241);
+                transform: scale(1.1);
+                cursor: pointer;
+            }
+
+         }
+
+
+
+            &__userBtn {
+                & a {
+                    text-decoration: none;
+                }
+                position: fixed;
+        right: 3%;
+        top: 5%;
+        font-size: 2.5rem;
+        border-radius: 50px;
+        height: 56px;
+        background-color: white;
+        transform: scale(1);
+        transition: all .250s ease-in-out ;
+                &:hover {
+                    background-color: rgb(194, 243, 131);
+                    transform: scale(1.1);
+                    cursor: pointer;
+                }
+    
+             }
+
+
+             &__logoutBtn {
+                & img {
+                    position: fixed;
+                    right: 3%;
+                    top: 18%;
+                    padding: 10px;
+                    font-size: 2.5rem;
+                    //height: 9%;
+                    border-radius: 50px;
+                    background-color: white;
+                    transform: scale(1);
+                    transition: all .250s ease-in-out ;
+                            &:hover {
+                                background-color: #f9bb58;
+                                transform: scale(1.1);
+                                cursor: pointer;
+                            }
+                }
+                
+             }
+
  
  }

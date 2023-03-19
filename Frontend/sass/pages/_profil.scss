@@ -16,6 +16,12 @@
         display: flex;
         flex-direction: column;
         justify-content: center;
+        align-items: center;
+        //margin: 0 auto;
+        & h3 {
+            padding: 10px;
+            font-size: 2rem;
+        }
     }
 
     &__btn_gestion {
@@ -26,7 +32,6 @@
             padding: 5px;
             border-radius: 10px;
             background-color: bisque;
-
 
         }
         &--deleteAccount {
@@ -40,8 +45,30 @@
 }
 
 .header_profil {
+    display: flex;
+    justify-content: space-evenly;
     padding: 50px;
     background-color: black;
+    &--BackArrow {
+        background-color: rgb(255, 255, 255);
+        & a {
+            text-decoration: none;
+        }
+        font-size: 1.5rem;
+        padding: 3px;
+        margin-left: -30%;
+        height: 33px;
+        cursor: pointer;
+        width: 33px;
+        border-radius: 50px;
+        background-color: white;
+        transform: scale(1);
+        transition: all .250s ease-in-out;
+        &:hover {
+            background-color: rgb(255, 106, 131);
+            transform: scale(1.1);
+        }
+    }
 }
 
 .footer_profil {
