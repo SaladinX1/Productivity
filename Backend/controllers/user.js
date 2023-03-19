@@ -82,6 +82,28 @@ try {
 }
 
 
+
+exports.getUser = (req, res) => {
+
+    const user_id = req.params.id;
+    const sql = `SELECT * FROM Users WHERE id =?`
+
+    db.query(sql, user_id, (err, result) => {
+        
+        if(err) {
+            res.status(400).json({message: 'Mauvaise requête ! '})
+        } 
+        else {
+            res.status(200).json(result);
+        }
+
+    })
+
+
+}
+
+
+
 exports.deleteUser = (req,res, next) => {
 
     const deleteUserRequest = `DELETE FROM 'Users' WHERE 'id' = ${req.params.id};`
