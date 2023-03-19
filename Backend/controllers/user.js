@@ -31,15 +31,9 @@ exports.register = async (req,res, next) => {
                 res.status(201).json({message: 'Données enregistrées ! Bravo !'})
             } else {
                 res.status(401).json({ message: 'Email déjà pris !'})
-                // db.query(request, (err, result) => {
-                //     if(!err) {
-                //     }
-                // })    
             }
             
         })
-
-
     } catch (err) {
         res.status(400).json({message: 'Mauvaise requête !'})
     }
@@ -49,29 +43,42 @@ exports.register = async (req,res, next) => {
 
 exports.login = (req, res, next) =>  {
 
+    console.log(req.body);
 
-    const requestLog = `SELECT 'email', 'password' FROM Users WHERE 'email' = ${req.body.email} ?`;
-    const userPassword = `SELECT 'password' FROM Users WHERE 'password' = '${req.body.password}';`;
-    const id = `SELECT 'id' FROM Users WHERE 'email' = ${req.body.email};`;
+    const { mailConn, passwordConn } = req.body;
 
-    db.query(requestLog, (err, result) => {
-        if(!result) {
-            res.status(401).json({message: 'utilisateur introuvable !'})
+try {
+    const sql = `SELECT id, nom, prenom, pseudo, password FROM Users WHERE mail=?`;
+    db.query(sql, mailConn, (err, result) => {
+        console.log('RESULT:',result);
+        if (err) {
+            res.status(500).json({message: 'Erreur serveur !'});
+        } else if (!result[0]) {
+            res.status(401).json({message: 'Utilisateur introuvable !'});
         } else {
-            bcrypt.compare(req.body.password, userPassword)
+            const user = result[0];
+            bcrypt.compare(passwordConn, user.password)
             .then(valid => {
                 if(!valid) {
-                  return res.status(401).json({message: 'Mot de passe incorrect !'});
+                    return res.status(401).json({message: 'Mot de passe incorrect !'});
                 } else {
-                    res.status(200).json({id:id, token: jwt.sign({id: id},
-                        process.env.TOKEN,
-                        { expiresIn:'24h'})
-                    })   
+                    const id = user.id;
+                    res.status(200).json({
+                        id: id,
+                        token: jwt.sign({id: id}, 'HARD_TOKEN_SECRET', { expiresIn: '24h' })
+                    });
                 }
             })
-            .catch(res.status(500).json({message: 'Erreur serveur !'}))
+            .catch(err => {
+                 console.log(err); // Log the error to know its cause
+                 res.status(500).json({message: 'Erreur serveur !'});
+             });
         }
-    })
+    });
+} catch (err) {
+    console.log(err); // Log the error to know its cause
+    res.status(500).json({message: 'Erreur serveur !'});
+}
 }
 
 
