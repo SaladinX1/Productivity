@@ -7,6 +7,8 @@ const mail = document.querySelector('#mail');
 const password = document.querySelector('#password');
 const pseudo = document.querySelector('#pseudo');
 
+const singin = document.querySelector('.home__signin'); 
+
 const signup = document.querySelector('.home__signup');
 
 
@@ -220,5 +222,90 @@ if ( validationForm.nomValid == true && validationForm.prenomValid == true && va
    lockMsg = true;
           }
     }
+
+});
+
+
+let mailInp = document.querySelector('#mailConn').value;
+let passInp = document.querySelector('#passwordConn').value;
+const mailErr = document.querySelector('.mailErr');
+const passwordErr = document.querySelector('.passwordErr');
+
+singin.addEventListener('submit', (e) => {
+e.preventDefault();
+
+//if(  mailInp != ' ' && passInp != ' ' ) {
+
+
+        const loginUserInfo = {
+            mailConn : document.querySelector('#mailConn').value,
+            passwordConn : document.querySelector('#passwordConn').value
+        }
+        
+        fetch(`http://localhost:3000/api/connectuser`, {
+                    method : "post",
+                    body : JSON.stringify(loginUserInfo),
+                    headers :  {
+                        'Content-Type' : 'application/json',
+                        'Accept' : 'application/json'
+                    },
+        }).then( data => {
+         data.json()
+         .then( res => {
+             console.log(res);
+        
+
+             alert('Connexion réussie ! 👌')
+            //  let id = res.id;
+            //  let token = res.token;
+            //  let name = res.name;
+            //  let admin = res.admin;
+        
+         
+        //      if(token === undefined) {
+        //          alert(`Une erreur a été repérée dans votre saisie.  \b\r \b\r information(s) incorrect(es) 😥! \b\r \b\r réessayez merci​`)
+        //  } else  {
+           //  alert('Vous êtes maintenant connecté 👌 !');
+            //  localStorage.setItem('id', id);
+            //  localStorage.setItem('token', token);
+            //  localStorage.setItem('name', name);
+            //  localStorage.setItem('admin', admin);
+        
+            //  sessionStorage.setItem('id', id);
+            //  sessionStorage.setItem('token', token);
+            //  sessionStorage.setItem('name', name);
+            //  sessionStorage.setItem('admin', admin);
+        
+             
+              window.location.replace('/Frontend/pages/fil-posts.html');
+              
+         //}                
+        })
+        })
+        .catch( err => { console.log(err) });
+
+    // } else if (mailInp == ' '){
+
+    //     mailErr.style.color = 'red';
+    //     mailErr.textContent = ' Veuillez entrer votre mail, merci...';
+    //     document.querySelector('#mailConn').style.border = '1px solid red';
+
+    //     setTimeout(() => {
+    //         mailErr.textContent = '';
+    //         document.querySelector('#mailConn').style.border = '';
+    //     }, 3000)
+
+
+    //  } else if(passwordErr == ' ') {
+
+    //     passwordErr.style.color = 'red';
+    //     passwordErr.textContent = 'Entrez un mot de passe valide, merci...';
+    //     document.querySelector('#passwordConn').style.border = '1px solid red';
+
+    //     setTimeout(() => {
+    //         passwordErr.textContent = '';
+    //     })
+
+    // }
 
 });
