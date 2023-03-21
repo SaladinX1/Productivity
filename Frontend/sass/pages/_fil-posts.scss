@@ -146,6 +146,21 @@
                 
              }
 
+             &__overlayPost {
+
+                
+                position: fixed;
+                background-color: black;
+                z-index: 5;
+                opacity: 0.4;
+                top: 10%;
+                transform: translateX(10%);
+                height: 80%;
+                width: 80%;
+                border-radius: 20px;
+
+             }
+
              &__footer {
                 display: flex;
                 justify-content: center;
@@ -177,5 +192,6 @@
                 }
              }
 
- 
+
+
  }
