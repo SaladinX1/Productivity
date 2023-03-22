@@ -4,6 +4,9 @@
     margin: 0;
 }
 
+body {
+  font-family:'Caveat', Arial, Helvetica, sans-serif;
+}
 
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
@@ -14,4 +17,5 @@ input::-webkit-inner-spin-button {
 @import 'pages/home';
 @import 'layouts/form';
 @import 'pages/fil-posts';
-@import 'pages/profil'
+@import 'pages/profil';
+@import 'utils/keyframes';

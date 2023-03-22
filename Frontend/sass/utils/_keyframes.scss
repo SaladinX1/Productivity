@@ -1,0 +1,10 @@
+@keyframes apparition {
+    from {
+        visibility: hidden;
+        opacity: 0.2;
+    }
+    to {
+        visibility: visible;
+        opacity: 1;
+    }
+}

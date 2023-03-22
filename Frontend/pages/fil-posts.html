@@ -70,16 +70,18 @@
            <img src="../icon/power-off.png" alt="Bouton de déconnexion"/>
         </div>
         
-     <div class="fil__overlayPost">
-        <form action="" class="overlayPost--form_post">
-            <label for="picture"></label>
-            <input type="file" id="picture" placeholder="Scan Picture">
+     <div class="fil__overlayPost apparition">
+        <form action="" class="fil__overlayPost--form_post">
+            <h2>Partages ton mood quoi ! Allez 😃 !</h2>
+            <label for="picture" class="picture">Picture :</label>
+            <input type="file" id="picture" name="picture" placeholder="Scan Picture">
             <label for="title"></label>
-            <input type="text" id="title" placeholder="Titre scan">
+            <input type="text" id="title" placeholder="Titre scan" name="title">
             <label for="message"></label>
-            <input type="text" id="message" placeholder="Inspire tes collegues de travail, crées la synergie ...">
+            <textarea name="message"  cols="30" rows="10" id="message" placeholder="Inspire tes collegues de travail, crées la synergie ..."></textarea>
 
-            <input type="submit" class="validPost">
+            <input id="btnPost" type="submit" class="validPost">
+            <input id="btnCancelPost" type="button" value="Annuler" class="cancelPost">
         </form>
        </div>
 
