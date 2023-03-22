@@ -254,10 +254,18 @@ e.preventDefault();
          .then( res => {
              console.log(res);
         
+             const id = res.id;
+             const token = res.token;
+             console.log(id, token);
 
+             localStorage.setItem('user_id', id);
+             sessionStorage.setItem('user_id', id);
+             localStorage.setItem('token', token);
+             sessionStorage.setItem('token', token);
+
+             
              alert('Connexion réussie ! 👌')
-            //  let id = res.id;
-            //  let token = res.token;
+
             //  let name = res.name;
             //  let admin = res.admin;
         
