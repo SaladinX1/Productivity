@@ -95,3 +95,42 @@
 .home__signup {
     display: none;
 }
+
+
+
+
+#info_user--put {
+    display: none;
+    position: absolute;
+    // transform: translate(100%, 10%);
+       opacity: 0.5;
+       
+       position: absolute;
+       top: 20%;
+       left: 38%;
+       flex-direction: column;
+       justify-content:space-evenly;
+       padding: 20px;
+       font-size: 1.5rem;
+       margin: 0 auto;
+       text-align: center;
+       max-width: 400px;
+       font-family: 'Caveat' ,'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+       word-wrap: break-word;
+       background-color: rgb(249, 241, 208);
+       border-radius: 10px;
+       transition: opacity .300s ease-in;
+       &:hover{
+           opacity: 0.8;
+       }
+       & input {
+        text-align: center;
+        padding: 15px;
+        margin: 5px auto;
+        font-size: 1.1rem;
+        width: 70%;
+        border: none;
+        border-radius: 5px;
+    font-weight: bold;
+    }
+}
