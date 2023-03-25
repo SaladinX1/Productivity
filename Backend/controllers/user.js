@@ -104,17 +104,17 @@ exports.getUser = (req, res) => {
 
 
 
-exports.deleteUser = (req,res, next) => {
+exports.deleteUser = (req,res) => {
 
-    const deleteUserRequest = `DELETE FROM 'Users' WHERE 'id' = ${req.params.id};`
+    const deleteUserRequest = `DELETE FROM Users WHERE id = ${req.params.id};`
 
-    db.query(deleteUserRequest, (err, result => {
+    db.query(deleteUserRequest, (err, result) => {
         if(!result) {
             res.status(500).json({message: 'Erreur Serveur !'})
         } else {
             res.status(200).json({message: 'Utilisateur supprimé !'})
         }
-    }))
+    });
 
 
 }
