@@ -25,6 +25,7 @@
     }
 
     &__btn_gestion {
+        margin: 20px;
 
         & button {
             outline: none;
@@ -41,6 +42,30 @@
             }
         }
 
+    }
+
+    &--delete {
+        display: none;
+        position: fixed;
+        top: 30%;
+    transform: translatex(-5%);
+    padding: 30px;
+    opacity: 0.8;
+    font-size: 2rem;
+    border-radius: 15px;
+    color: rgb(246, 255, 0);
+    background-color: rgb(255, 129, 110);
+    transition: all .250s ease-in-out ;
+    &:hover {
+        opacity: 1;
+    }
+    & button {
+        padding: 10px;
+        border-radius: 5px;
+        outline: none;
+        border: none;
+
+    }
     }
 }
 
@@ -70,6 +95,8 @@
         }
     }
 }
+
+
 
 .footer_profil {
     padding: 50px;
