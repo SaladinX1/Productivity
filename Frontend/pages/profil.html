@@ -16,17 +16,49 @@
             <a href="./fil-posts.html">◀</a>
         </div>
         <h1 class="info_user__brand">Mes données persos ...</h1>
+        <div class="fil__logoutBtn">
+            <img src="../icon/power-off.png" alt="Bouton de déconnexion"/>
+         </div>
 
     </header>
 
     <main>
 
         <div class="info_user__data">
+           
 
-       
-            <div class="info_user__btn_gestion">
-                <button class="info_user__btn_gestion--deleteAccount">Supprimer mon compte</button>
-                <button class="info_user__btn_gestion--putAccount">Modifier infos</button>
+            <form id="info_user--put">
+    
+                <h2>Modifier mes données..</h2>
+    
+                <label for="nomPut"></label>
+                <input id="nomPut" type="text" placeholder="Nom" name="nom" >
+                <p id="nomErrMsgPut"></p>
+    
+                <label for="prenomPut"></label>
+                <input id="prenomPut" type="text" placeholder="Prenom" name="prenom">
+                <p id="prenomErrMsgPut"></p>
+    
+                <label for="pseudoPut"></label>
+                <input id="pseudoPut" type="text" placeholder="pseudo" name="pseudo">
+                <p id="pseudoErrMsgPut"></p>
+
+                <label for="mailPut"></label>
+                <input id="mailPut" type="email" name="mail" placeholder="E-mail">
+                <p id="mailErrMsgPut"></p>
+
+                <label for="passwordPut"></label>
+                <input id="passwordPut" type="password" name="password" placeholder="password">
+                <p id="passwordErrMsgPut"></p>
+    
+                <input type="submit" value="Modifier" class="btn__put">
+                <input type="submit" value="Annuler" onclick="cancelPutForm()" class="btn__cancelPut">
+            </form>
+
+            <div class="info_user--delete">
+                <h4>Voulez-vous vraiment suprimer votre compte ? <br>  /!\ (Cette action est définitive) /!\</h4>
+                <button  id="delete_user" onclick="deleteAccount()" >Confirmer</button>
+                <button type="button" id="delete_user--cancel" onclick="cancelDelete()">Annuler</button>
             </div>
 
         </div>
@@ -38,6 +70,9 @@
 
     </footer>
     
+    <script src="../js/form.js"></script>
     <script src="../js/data.js"></script>
+    <script src="../js/log.js"></script>
+
 </body>
 </html>
