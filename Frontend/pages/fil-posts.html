@@ -71,21 +71,21 @@
         </div>
         
      <div class="fil__overlayPost apparition">
-        <form action="" class="fil__overlayPost--form_post">
+        <form  class="fil__overlayPost--form_post" enctype="multipart/form-data">
             <h2>Partages ton mood quoi ! Allez 😃 !</h2>
             <label for="picture" class="picture">Picture :</label>
-            <input type="file" id="picture" name="picture" placeholder="Scan Picture">
+            <input type="file" id="picture" name="picture">
             <label for="title"></label>
             <input type="text" id="title" placeholder="Titre scan" name="title">
             <label for="message"></label>
             <textarea name="message"  cols="30" rows="10" id="message" placeholder="Inspire tes collegues de travail, crées la synergie ..."></textarea>
 
-            <input id="btnPost" type="submit" class="validPost">
+            <input id="btnPost" type="button" value="Envoyer" onclick="sendScan()" class="validPost">
             <input id="btnCancelPost" type="button" value="Annuler" class="cancelPost">
         </form>
        </div>
 
-  
+      
 
 
     </main>
@@ -103,6 +103,7 @@
     </footer>
     
     <script src="/Frontend/js/fil-actu.js"></script>
+    <script src="/Frontend/js/data.js"></script>
     <script src="/Frontend/js/log.js"></script>
 </body>
 </html>
