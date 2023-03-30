@@ -286,42 +286,21 @@ if(  mailInp != '' && passInp != '' ) {
         }).then( data => {
          data.json()
          .then( res => {
-             console.log(res);
-        
-             const id = res.id;
+             
              const token = res.token;
-             console.log(id, token);
 
-             localStorage.setItem('user_id', id);
-             sessionStorage.setItem('user_id', id);
-             localStorage.setItem('token', token);
-             sessionStorage.setItem('token', token);
-
-             
-             alert('Connexion réussie ! 👌')
-
-            //  let name = res.name;
-            //  let admin = res.admin;
+            if(token == undefined) {
+                alert('Une erreur à été repérée dans la saisie du mot de passe ou de votre mail, réessayez, merci !');
+            } else {
+                const id = res.id;
+                localStorage.setItem('user_id', id);
+                sessionStorage.setItem('user_id', id);
+                localStorage.setItem('token', token);
+                sessionStorage.setItem('token', token);
+                alert('Connexion réussie ! 👌')
+                window.location.replace('/Frontend/pages/fil-posts.html');
+            }
         
-         
-        //      if(token === undefined) {
-        //          alert(`Une erreur a été repérée dans votre saisie.  \b\r \b\r information(s) incorrect(es) 😥! \b\r \b\r réessayez merci​`)
-        //  } else  {
-           //  alert('Vous êtes maintenant connecté 👌 !');
-            //  localStorage.setItem('id', id);
-            //  localStorage.setItem('token', token);
-            //  localStorage.setItem('name', name);
-            //  localStorage.setItem('admin', admin);
-        
-            //  sessionStorage.setItem('id', id);
-            //  sessionStorage.setItem('token', token);
-            //  sessionStorage.setItem('name', name);
-            //  sessionStorage.setItem('admin', admin);
-        
-             
-              window.location.replace('/Frontend/pages/fil-posts.html');
-              
-         //}                
         })
         })
         .catch( err => { console.log(err) });
@@ -488,10 +467,5 @@ document.querySelector('#info_user--put').addEventListener('submit', (e) => {
     e.preventDefault();
     // Ajouter le code de traitement du formulaire ici
 });
-
-
-
-
-//})
 
 };
