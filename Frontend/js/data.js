@@ -1,14 +1,18 @@
 const data_userProfile = document.querySelector('.info_user__data');
 const user_id = localStorage.getItem('user_id');
-const token = localStorage.getItem('token');
+
+
+
 
 window.addEventListener('load', () => {
     if(document.URL.includes('profil.html')) {
+        const token = localStorage.getItem('token');
         fetch(`http://localhost:3000/api/getuser/${user_id}`, {
             method: 'GET',
             headers: {
                 'accept': 'application/json',
-                'content-type': 'application/json'
+                'content-type': 'application/json',
+                'authorization' : `Bearer ${token}`
             }
         })
         .then(res => {return res.json()})
@@ -34,6 +38,7 @@ window.addEventListener('load', () => {
 
 ///////////////// requête Delete User //////////////////////////
 function deleteAccount() {
+    const token = localStorage.getItem('token');
     fetch(`http://localhost:3000/api/deleteuser/${user_id}`, {
         method: 'DELETE',
         headers: {
@@ -50,4 +55,39 @@ function deleteAccount() {
         
     })
 
+}
+
+
+//////////////  POST ///////////////////
+
+
+////////////////  AJOUT SCAN POST REQUEST //////////////////
+function sendScan() {
+    const token = localStorage.getItem('token');
+    ///// Récupération champs post Scan et gestion post ///////////
+    let title = document.querySelector('#title').value;
+    let picture = document.querySelector('#picture').files[0];
+    let message = document.querySelector('#message').value;
+
+    let data = new FormData();
+    data.append('title', title);
+    data.append('picture', picture);
+    data.append('message', message);
+
+
+    fetch(`http://localhost:3000/api/addpost`, {
+        method: 'POST',
+        body: data,
+        headers : {
+            'authorization' : `Bearer ${token}`
+        } 
+       
+    })
+    .then(data => {return data.json()})
+    .then(res => {
+        console.log(res);
+
+        alert('Scan crée ! Bien joué !')
+        location.reload();
+    })
 }
