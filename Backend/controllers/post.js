@@ -2,6 +2,28 @@
 const db = require('../database/db.script');
 
 
+
+exports.addPost = (req, res) => {
+
+    const user_id = req.user.id;
+  
+    const { title, message } = req.body; 
+
+    const picture = `${req.protocol}://${req.get('host')}/images/${req.file.filename}`;
+
+    const addScan = `INSERT INTO Post (title, picture, message, user_id) VALUES (?, ?, ?, ?)`;
+
+    db.query(addScan,[title, picture, message, user_id], (err, result) => {
+        if(!result) {
+            console.log(err);
+            res.status(400).json({message: 'Mauvaise requête ! '})
+        } else {
+            res.status(201).json({message: 'Scan Crée !'})
+        }
+    })
+}
+
+
 exports.allPosts = (req,res, next) => {
 
   const Post = `SELECT * FROM 'Post' `
@@ -17,7 +39,6 @@ exports.allPosts = (req,res, next) => {
 }
 
 exports.onePost = (req, res,next) => {
-
     const id = req.params.id;
 
     const getOnePost = `SELECT FROM Post WHERE 'id' = ${id} `;
@@ -33,11 +54,8 @@ exports.onePost = (req, res,next) => {
 
 
 exports.deletePost = (req,res, next) => {
-
     const id = req.params.id;
-
     const deletePost = `DELETE FROM Post WHERE 'id' = ${id}`;
-    
     
     db.query(deletePost, (err, result) => {
         if(!result) {
