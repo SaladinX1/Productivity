@@ -1,0 +1,64 @@
+.scan {
+
+    text-align: center;
+    margin: 50px auto;
+    background-color: #bfdad8;
+    font-size: 1.5rem;
+    width: 60%;
+    padding: 20px;
+    border-radius: 20px;
+    &__btnScanGestion {
+        &--deleteScan {
+            background-color: #ee2b72;
+            color: white;
+            cursor: pointer;
+            transform: scale(1);
+            transition: all ease-in .250s;
+            &:hover {
+                transform: scale(1.1);
+            }
+        }
+        &--putScan {
+            background-color: #2bcaee;
+            color: white;
+            cursor: pointer;
+            transform: scale(1);
+            transition: all ease-in .250s;
+            &:hover {
+                transform: scale(1.1);
+            }
+        }
+    }
+
+    &__btnLikeUnlike {
+        &--like {
+            background-color: #2beeee;
+            cursor: pointer;
+            transform: scale(1);
+            font-size: 1.2rem;
+            transition: all ease-in .250s;
+            &:hover {
+                transform: scale(1.1);
+            }
+        }
+        &--unlike {
+            background-color: #f1250a;
+            cursor: pointer;
+            transform: scale(1);
+            font-size: 1.2rem;
+            transition: all ease-in .250s;
+            &:hover {
+                transform: scale(1.1);
+            }
+        }
+    }
+}
+
+
+.comments {
+    padding: 20px;
+    background-color: #f1f1f1;
+    border-radius: 15px;
+    width: 70%;
+    margin: 20px auto;
+}
