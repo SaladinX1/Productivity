@@ -80,7 +80,7 @@ function deleteAccount() {
         for(let info of data ) {
             console.log(info.picture);
             blog.innerHTML += `
-            <div class='fil__blog--post'>
+            <div class='fil__blog--post' data-id='${info.id}'>
                     <h1>${info.title}</h1>
                     <img src='${info.picture}' alt='Image du post'/>
                     <div class="fil__blog--post_sampleAnnounce">
@@ -90,16 +90,36 @@ function deleteAccount() {
             </div>
             `
         }
+        
+        /////////////////////// GESTION RECUPERATION UNIQUE POST //////////////////////////
+        document.querySelectorAll('.fil__blog--post').forEach(post => {
+            post.addEventListener('click', (e) => {
+            let id = post.getAttribute('data-id');
+            
+            fetch(`http://localhost:3000/api/post/${id}`, {
+                method:'GET',
+                headers: {
+                    'accept':'application/json',
+                    'content-type':'application/json',
+                    'authorization': `Bearer ${token}`
+                }
+            })
+            .then(data => {return data.json()})
+            .then( res => {
+                for(let post of res) {
+                    localStorage.setItem('post_id', post.id);
+                    location.replace('/Frontend/pages/post_view.html');
+                }
+            })
+        })
+     })
     })
-
     btnDisplayOverlay.addEventListener('click', () => {
         overlayPostScan.style.display = 'block';
     })
-
     btnCancelOverlay.addEventListener('click', () => {
         overlayPostScan.style.display = 'none';
     })
-
  }
     
 
@@ -117,7 +137,7 @@ function sendScan() {
     data.append('picture', picture);
     data.append('message', message);
 
-    if(title != '' && !picture && message != '') {
+    if(title != '' && picture != '' && message != '') {
         fetch(`http://localhost:3000/api/addpost`, {
             method: 'POST',
             body: data,
@@ -147,4 +167,47 @@ function sendScan() {
 
     }
 
-   
+   //////////////////////// POST VIEW ///////////////////////
+    if(document.URL.includes('/post_view.html')) {
+
+        const id = localStorage.getItem('id');
+        
+        //////////////// GESTION RECUPERATION ID DATA /////////////////
+        fetch(`http://localhost:3000/api/post/${id}`, {
+            method:'GET',
+            headers: {
+                'accept': 'application/json',
+                'content-type': 'application/json',
+                'authorization' : `Bearer ${token}`
+            }
+        })
+        .then(data => {return data.json()})
+        .then(res => {
+
+            console.log(res);
+
+            const scanTitle = document.querySelector('.scan > h1');
+            const scanPicture = document.querySelector('.scan > img');
+            const scanMessage = document.querySelector('.scan > p');
+            const btnOverlayDeleteScan = document.querySelector('.scan__btnScanGestion--deleteScan');
+            const btnPutScan = document.querySelector('.scan__btnScanGestion--putScan');
+        
+            for(let i of res) {
+                scanTitle.textContent = `${i.title}`;
+                scanPicture.src = `${i.picture}`;
+                scanMessage.textContent = `${i.message}`;
+            }
+
+            ///////////////////// GESTION DELETE SCAN REQUEST //////////////////
+            btnOverlayDeleteScan.addEventListener('click', () => {
+                
+            })
+
+
+
+        })
+
+
+      
+
+    }
