@@ -1,36 +1,27 @@
-const jwt  = require('jsonwebtoken');
+const jwt = require('jsonwebtoken');
 const db = require('../database/db.script');
-
+//const { verify } = require('jsonwebtoken')
 
 module.exports = (req, res, next) => {
-
-try {
-
-    const token = req.headers.authorization.split(' ')[1];
-    const verifyToken = jwt.verify(token, process.env.TOKEN);
-    req.auth = verifyToken.id;
-    const selectAuthUser = `SELECT 'id' FROM 'Users' WHERE 'id' = ${req.auth}`;
-
-    db.query(selectAuthUser, (err, result) => {
-        if(!result) {
-            res.status(401).json({message :' requête non autorisé !'})
-        } else {
-            req.user = selectAuthUser;
-            next();
-        }
-    })
-
-
-} catch {
-
-        return res.json(400).json({
-            error: new Error('la requête est invalide !')
-        })
-
-
-
-}
-
+    try {
+        
+        const token = req.headers.authorization.split(' ')[1];
+        const verifyToken = jwt.verify(token, 'HARD_SECRET_TOKEN');
+        const selectAuthUser = `SELECT * FROM Users WHERE id = ?`;
+        
+        db.query(selectAuthUser, verifyToken.id, (err, result) => {
+            if (!result) {
+                res.status(401).json({message: 'Unauthorized'});
+            } else {
+                req.user = result[0];
+                next();
+            }
+        });
+    } 
+      catch (error) {
+      console.log(error);  
+      res.status(401).json({message: 'Unauthorized'});
+    }
 };
 
 
