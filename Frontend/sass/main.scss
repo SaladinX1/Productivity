@@ -15,7 +15,9 @@ input::-webkit-inner-spin-button {
 }
 
 @import 'pages/home';
+@import 'components/button.scss';
 @import 'layouts/form';
 @import 'pages/fil-posts';
+@import 'pages/post_view';
 @import 'pages/profil';
 @import 'utils/keyframes';
