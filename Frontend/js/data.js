@@ -228,12 +228,72 @@ function sendScan() {
                     localStorage.removeItem('post_id')
                     location.replace('/Frontend/pages/fil-posts.html');
                 })
+            })
+
+            ///////////////////////GESTION REQUÊTE PUT SCAN //////////////////////
+
+            const cancelOverlayPutScan = document.querySelector('.putScanForm__cancelPutScanbtn');
+            const displayOverlayPutScan = document.querySelector('.scan__btnScanGestion--putScan');
+            const putScanForm = document.querySelector('.putScanForm');
+
+            displayOverlayPutScan.addEventListener('click', () => {
+                putScanForm.style.display = 'block';
+            });
+            cancelOverlayPutScan.addEventListener('click', () => {
+                putScanForm.style.display = 'none';
+            })
+
+
+            putScanForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+      
+
+                const titleInput = document.querySelector('#titlePut').value;
+                const pictureInput = document.querySelector('#picturePut').value;
+                const messageInput = document.querySelector('#messagePut').value;
+
+                let putScan = {
+                    title: titleInput,
+                    picture: pictureInput,
+                    message: messageInput
+                }
+
+                if( titleInput != '' || pictureInput != '' || messageInput != '') {
+                    
+                    fetch(`http://localhost:3000/api/putpost/${id}`, {
+                        method: 'PUT',
+                        body: JSON.stringify(putScan),
+                        headers: {
+                            'accept': 'application/json',
+                            'content-type': 'application/json',
+                            'authorization': `Bearer ${token}`
+                        }
+                    })
+                    .then( data => { return data.json()})
+                    .then(res => {
+                        console.log(res);
+                        alert('Scan Modifié !');
+                        location.reload();
+                    })
+                   
+
+                } else {
+
+                    document.querySelector('.errPutScanMsg').textContent = 'Veuillez remplir au moins un champs à modifier ...';
+                    document.querySelector('.errPutScanMsg').style.color = 'red';
+                    document.querySelector('.errPutScanMsg').style.fontSize = '1.2rem';
+                    document.querySelector('.errPutScanMsg').style.fontWeight = 'bold';
+
+                    setTimeout(() => {
+                        document.querySelector('.errPutScanMsg').textContent = '';
+                    },1800);
+
+                }
+
+             
 
             })
-            
-
-
-
+          
         })
 
 

@@ -35,10 +35,25 @@
         </div>
 
         <div class="overlayDeleteScan">
-            <h2>Voulez-vous vraiment Supprimer votre Scan ?</h2>
+            <h2>Voulez-vous vraiment Supprimer ce Scan ?</h2>
             <button class="deleteScan">Confirmer</button>
             <button class="cancelDeleteScan">Annuler</button>
         </div>
+
+        <form class="putScanForm">
+
+            <label for="titlePut"></label>
+            <input id="titlePut" name="titlePut" placeholder="Nouveau Titre" type="text">
+
+            <label for="picturePut"></label>
+            <input id="picturePut" name="picturePut" type="file">
+
+            <label for="messagePut"></label>
+            <textarea id="messagePut" name="messagePut" class="textareaPutScan" placeholder="Nouveau message" cols="20" rows="10" type=""></textarea>
+            <p class="errPutScanMsg"></p>
+            <button type="submit" class="putScanForm__putScanbtn">Modifier Scan</button>
+            <button type="button" class="putScanForm__cancelPutScanbtn">Annuler</button>
+        </form>
 
         <div class="comments">
             

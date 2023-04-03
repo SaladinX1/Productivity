@@ -12,7 +12,7 @@ const upload = multer({ dest: '/images' });
 router.get('/allposts', auth,  postCtrl.allPosts);
 router.get('/post/:id', auth, postCtrl.onePost);
 router.post('/addpost', auth, upload.single('picture'), postCtrl.addPost);
-router.put('/putpost',auth, postCtrl.putPost);
+router.put('/putpost/:id',auth, postCtrl.putPost);
 router.delete('/deletepost/:id', auth, postCtrl.deletePost);
 
 module.exports = router;

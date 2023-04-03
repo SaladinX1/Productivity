@@ -77,18 +77,19 @@ exports.putPost = (req, res, next) => {
 
     const id = req.params.id;
 
-    const {
+    const { title,
         message, picture
     } = req.body;
 
-    const putPost = `UPDATE Post SET '${message}', '${picture}' WHERE 'id' = ${id}; `
+    const putPost = `UPDATE Post SET title='${title}', picture='${picture}', message='${message}' WHERE id =?;`
 
 
-    db.query(putPost, (err, result) => {
+    db.query(putPost, id, (err, result) => {
         if(!result) {
+            console.log(err);
             res.status(400).json({message: 'Mauvaise requête'});
         } else {
-            res.status(200).json({message: 'Post Modifié !'})
+            res.status(200).json(result)
         }
     });
 
