@@ -54,6 +54,24 @@
     }
 }
 
+.overlayDeleteScan {
+    display: none;
+        position: fixed;
+        top: 30%;
+        left: 25%;
+        width: 50%;
+    padding: 30px;
+    opacity: 0.8;
+    font-size: 1.2rem;
+    border-radius: 15px;
+    color: rgb(246, 255, 0);
+    background-color: rgb(255, 129, 110);
+    transition: all .250s ease-in-out ;
+    &:hover {
+        opacity: 1;
+    }
+}
+
 
 .comments {
     padding: 20px;

@@ -170,7 +170,7 @@ function sendScan() {
    //////////////////////// POST VIEW ///////////////////////
     if(document.URL.includes('/post_view.html')) {
 
-        const id = localStorage.getItem('id');
+        const id = localStorage.getItem('post_id');
         
         //////////////// GESTION RECUPERATION ID DATA /////////////////
         fetch(`http://localhost:3000/api/post/${id}`, {
@@ -189,7 +189,12 @@ function sendScan() {
             const scanTitle = document.querySelector('.scan > h1');
             const scanPicture = document.querySelector('.scan > img');
             const scanMessage = document.querySelector('.scan > p');
+
             const btnOverlayDeleteScan = document.querySelector('.scan__btnScanGestion--deleteScan');
+            const overlayDeleteScan = document.querySelector('.overlayDeleteScan');
+            const cancelOverlayDelete = document.querySelector('.cancelDeleteScan');
+            const btnDeleteScan = document.querySelector('.deleteScan');
+
             const btnPutScan = document.querySelector('.scan__btnScanGestion--putScan');
         
             for(let i of res) {
@@ -200,8 +205,32 @@ function sendScan() {
 
             ///////////////////// GESTION DELETE SCAN REQUEST //////////////////
             btnOverlayDeleteScan.addEventListener('click', () => {
-                
+                overlayDeleteScan.style.display = 'block'
             })
+            cancelOverlayDelete.addEventListener('click', () => {
+                overlayDeleteScan.style.display = 'none'
+            })
+            btnDeleteScan.addEventListener('click', () => {
+
+               // const token = localStorage.getItem('token');
+
+                fetch(`http://localhost:3000/api/deletepost/${id}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'accept' : 'application/json',
+                        'content-type' : 'application/json',
+                        'authorization': `Bearer ${token}`
+                    }
+                }).then(data => { return data.json()})
+                .then(res => {
+                    console.log(res);
+                    alert('Le Scan a bien été supprimé !');
+                    localStorage.removeItem('post_id')
+                    location.replace('/Frontend/pages/fil-posts.html');
+                })
+
+            })
+            
 
 
 
