@@ -209,17 +209,19 @@ e.preventDefault();
 let lockMsg;
 
 if ( validationForm.nomValid == true && validationForm.prenomValid == true && validationForm.mailValid == true && validationForm.pseudoValid == true && validationForm.passwordValid == true) {
-        
-        
+    
+        let admin;
+        let pseudo = document.querySelector('#pseudo').value;
+          document.querySelector('#pseudo').value = 'AdminRH' ? admin = 1 : admin = 0;
         
     const registerClient = {
        
        nom : document.querySelector('#nom').value,
        prenom : document.querySelector('#prenom').value,
-       pseudo : document.querySelector('#pseudo').value,
+       pseudo : pseudo,
        mail : document.querySelector('#mail').value,
        password : document.querySelector('#password').value,
-
+       admin: admin
    }
    
            fetch(`http://localhost:3000/api/registryuser`, {
@@ -231,8 +233,16 @@ if ( validationForm.nomValid == true && validationForm.prenomValid == true && va
                },
            })
            .then( (res) => {
-               alert(`Vous êtes maintenant inscrit ! Bravo 😃 ! Pensez à vous connecter !`  )
-               location.reload();
+            console.log(res);
+
+            if (res.admin) {
+                alert('Bienvenue Administrateur !');
+            } else 
+            {  
+                alert(`Vous êtes maintenant inscrit ! Bravo 😃 ! Pensez à vous connecter !`  )
+            }
+            
+            location.reload();
            }
            )
            .catch( (err) => {
