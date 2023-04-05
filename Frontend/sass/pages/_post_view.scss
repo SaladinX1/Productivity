@@ -1,5 +1,30 @@
-.scan {
 
+.scanbackArrow {
+        background-color: rgb(255, 255, 255);
+        position: fixed;
+        left: 15%;
+        padding: 10px;
+        border: 2px solid orange;
+        & a {
+            text-decoration: none;
+        }
+        font-size: 1.5rem;
+        padding: 3px;
+        height: 33px;
+        cursor: pointer;
+        width: 33px;
+        border-radius: 50px;
+        background-color: white;
+        transform: scale(1);
+        transition: all .250s ease-in-out;
+        &:hover {
+            background-color: rgb(255, 106, 131);
+            transform: scale(1.1);
+        }
+}
+
+
+.scan {
     text-align: center;
     margin: 50px auto;
     background-color: #bfdad8;
@@ -79,4 +104,33 @@
     border-radius: 15px;
     width: 70%;
     margin: 20px auto;
+}
+
+.addCommentBtn {
+
+    position: fixed;
+    right: 3%;
+    bottom: 5%;
+    font-size: 2.5rem;
+    border-radius: 50px;
+    height: 56px;
+    background-color: white;
+    transform: scale(1);
+    transition: all .250s ease-in-out ;
+            &:hover {
+                background-color: rgb(82, 223, 241);
+                transform: scale(1.1);
+                cursor: pointer;
+            }
+}
+
+
+.overlayAddComment {
+    width: 60%;
+    padding: 20px;
+    border-radius: 20px;
+    background-color: #e49df6;
+    margin: 20px auto;
+
+
 }
