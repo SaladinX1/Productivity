@@ -128,7 +128,7 @@
 
 
 .overlayAddComment {
-    // display: none;
+    display: none;
     position: absolute;
     top: 200px;
     left: 200px;
@@ -151,6 +151,18 @@
     transition: all ease-in-out .250s;
     &:hover {
         opacity: 1;
+    }
+    &__putCommentbtn {
+        background-color: #4fffe5;
+        width: 20%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    &__cancelCommentbtn {
+        background-color: #fe516e;
+        width: 20%;
+        margin-left: auto;
+        margin-right: auto;
     }
 }
 
