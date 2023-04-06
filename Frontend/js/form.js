@@ -296,18 +296,21 @@ if(  mailInp != '' && passInp != '' ) {
         }).then( data => {
          data.json()
          .then( res => {
-             
+             console.log(res);
              const token = res.token;
-
-            if(token == undefined) {
-                alert('Une erreur à été repérée dans la saisie du mot de passe ou de votre mail, réessayez, merci !');
-            } else {
-                const id = res.id;
-                localStorage.setItem('user_id', id);
-                sessionStorage.setItem('user_id', id);
-                localStorage.setItem('token', token);
-                sessionStorage.setItem('token', token);
-                alert('Connexion réussie ! 👌')
+             const pseudo = res.pseudo;
+             
+             
+             if(token == undefined) {
+                 alert('Une erreur à été repérée dans la saisie du mot de passe ou de votre mail, réessayez, merci !');
+                } else {
+                    const id = res.id;
+                    localStorage.setItem('user_id', id);
+                    sessionStorage.setItem('user_id', id);
+                    localStorage.setItem('token', token);
+                    sessionStorage.setItem('token', token);
+                    localStorage.setItem('pseudo', pseudo);
+                    alert('Connexion réussie ! 👌')
                 window.location.replace('/Frontend/pages/fil-posts.html');
             }
         

@@ -4,15 +4,9 @@ const db = require('../database/db.script');
 const bcrypt = require('bcrypt');
 
 exports.register = async (req,res, next) => {
-
-    //const {nom, prenom, pseudo, mail} = req.body;
-
-   
-
+console.log(req.body);
    const {password: password} = req.body;
-
     try {
-        
 
         const salt = await bcrypt.genSalt(5);
         const cryptPass = await bcrypt.hash(password, salt);
@@ -22,9 +16,7 @@ exports.register = async (req,res, next) => {
             password: cryptPass
         }
 
-        // const request = `INSERT INTO Users ('nom','prenom','pseudo','mail','password') VALUES ('${nom}','${prenom}','${pseudo}','${mail}','${cryptPass}')`;
         const request = `INSERT INTO Users SET ?`;
-       // const existMail = `SELECT * FROM Users WHERE mail = '${mail}'`;
 
         db.query(request, user,(err, result) => {
             if(result) {
@@ -42,8 +34,6 @@ exports.register = async (req,res, next) => {
 
 
 exports.login = (req, res, next) =>  {
-
-    console.log(req.body);
 
     const { mailConn, passwordConn } = req.body;
 
@@ -63,9 +53,11 @@ try {
                     return res.status(401).json({message: 'Mot de passe incorrect !'});
                 } else {
                     const id = user.id;
+                    const pseudo = user.pseudo;
                     res.status(200).json({
                         id: id,
-                        token: jwt.sign({id: id}, 'HARD_TOKEN_SECRET', { expiresIn: '24h' })
+                        pseudo: pseudo,
+                        token: jwt.sign({id: id}, 'HARD_SECRET_TOKEN' , { expiresIn: '24h' })
                     });
                 }
             })
@@ -103,7 +95,6 @@ exports.getUser = (req, res) => {
 }
 
 
-
 exports.deleteUser = (req,res) => {
 
     const deleteUserRequest = `DELETE FROM Users WHERE id = ${req.params.id};`
@@ -127,7 +118,7 @@ exports.putUser = (req, res, next) => {
     const password = req.body.password;
     const pic = req.body.picture;
 
-    const putData = `UPDATE 'Users' SET '${pseudo}', '${email}', '${password}', '${pic}' WHERE 'id' = '${id}';`;
+    const putData = `UPDATE Users SET '${pseudo}', '${email}', '${password}', '${pic}' WHERE 'id' = '${id}';`;
 
     db.query(putData, (err, result) => {
         if(!result) {
