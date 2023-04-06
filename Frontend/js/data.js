@@ -64,6 +64,8 @@ function deleteAccount() {
 
  if (document.URL.includes('fil-posts.html')) {
 
+    localStorage.removeItem('post_id');
+    
     fetch('http://localhost:3000/api/allposts', {
         method: "GET",
         headers: {
@@ -169,6 +171,21 @@ function sendScan() {
 
    //////////////////////// POST VIEW ///////////////////////
     if(document.URL.includes('/post_view.html')) {
+
+        // const user_id = localStorage.getItem('user_id');
+
+        // fetch(`http://localhost:3000/api/getuser/${user_id}`, {
+        //     method: 'GET',
+        //     headers: {
+        //         'accept': 'application/json',
+        //         'content-type': 'application/json',
+        //         'authorization': `Bearer ${token}`
+        //     }
+        // })
+        // .then(data => {return data.json()})
+        // .then(res => {
+        //     console.log(res);
+        // })
 
         const id = localStorage.getItem('post_id');
         
@@ -289,14 +306,74 @@ function sendScan() {
                     },1800);
 
                 }
+            })
+        })
 
-             
+        /////////////////////////// REQUEST GET COMMENTS ////////////////////////////////////////
+
+        fetch(`http://localhost:3000/api/post/${id}/comments`, {
+                method: 'GET',
+                headers: {
+                    'accept': 'application/json',
+                    'content-type': 'application/json',
+                    'authorization': `Bearer ${token}`
+                }
+            })
+            .then(data => { return data.json()})
+            .then(res => {
+                console.log(res);
+
+                for(let comment of res) {
+                    document.querySelector('.comments').innerHTML += ` <div class='userComm'> <span>${comment.pseudo_user}</span>: ${comment.message} </div> `;
+                }
 
             })
-          
+
+        //////////////////////////// REQUEST POST COMMENT ////////////////////////////////////////
+
+        const btnOverlayComment = document.querySelector('.addCommentBtn');
+        const btnCancelOverlayComment = document.querySelector('.overlayAddComment__cancelCommentbtn');
+        const overlayComment = document.querySelector('.overlayAddComment');
+        const formComment = document.querySelector('.overlayAddComment__commentForm');
+
+        btnOverlayComment.addEventListener('click', () => {
+            overlayComment.style.display = 'block';
+        })
+      
+        btnCancelOverlayComment.addEventListener('click', () => {
+            overlayComment.style.display = 'none';
         })
 
 
-      
+        formComment.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+            let sendMessage = document.querySelector('#commentToAdd').value;
+            let pseudo = localStorage.getItem('pseudo');
+
+            let sendMsg = {
+                pseudo: pseudo,
+                message: sendMessage,
+            };
+
+            fetch(`http://localhost:3000/api/post/${id}/comment`, {
+                method: 'POST',
+                body: JSON.stringify(sendMsg),
+                headers: {
+                    'accept': 'application/json',
+                    'content-type': 'application/json',
+                    'authorization': `Bearer ${token}`
+                }
+            })
+            .then(data => { return data.json()})
+            .then(res => {
+                console.log(res);
+                alert('Merci de ton partages !');
+                location.reload();
+            })
+
+        });
+
+
 
     }
