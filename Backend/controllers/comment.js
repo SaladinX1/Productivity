@@ -47,6 +47,23 @@ exports.getOneComment = (req, res) => {
 
 exports.putComment = (req, res) => {
 
+    //const post_id = req.params.post_id;
+    const idComment = req.params.id;
+    console.log(req);
+    const {comment} = req.body;
+
+    const sql = `UPDATE Comment SET message='${comment}' WHERE id =?;`;
+
+    db.query(sql, idComment, (err, result) => {
+        if(err) {
+            console.log(err);
+            res.status(500).json({message: 'Erreur serveur...'})
+        } else {
+            res.status(200).json({message: 'Commentaire modifié !'})
+        }
+    })
+
+
 }
 
 exports.deleteComment = (req, res) => {
