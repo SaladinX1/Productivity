@@ -324,10 +324,90 @@ function sendScan() {
                 console.log(res);
 
                 for(let comment of res) {
-                    document.querySelector('.comments').innerHTML += ` <div class='userComm'> <span>${comment.pseudo_user}</span>: ${comment.message} </div> `;
+                    document.querySelector('.comments').innerHTML += `<div class='userComm' data-id='${comment.id}'>
+                                                                        <span>${comment.pseudo_user}</span>: ${comment.message}
+                                                                        <button type="submit" class="putCommentBtn">Modifier</button>
+                                                                        <div class="userComm__putComment hidden">
+                                                                        <form class="userComm__putCommen--putCommentForm">
+                                                    
+                                                                        <h3>Changes d'avis, ici ! xp</h3>
+                                                                                <textarea name="putCommentContent" id="putCommentContent" cols="5 " rows="3"></textarea>
+                                                                                <button type="submit" class="sendPutCommentBtn" >Envoyer</button>
+                                                                                </form>
+                                                                                <button type="button" class="overlayAddComment__cancelCommentbtn">Annuler</button>
+                                                                            <p class='errPutComment'></p> 
+                                                                            </div>
+                                                                        </div> `;
                 }
 
-            })
+                document.querySelectorAll('.putCommentBtn').forEach(com => {
+                    com.addEventListener('click', (e) => {
+                        if (!document.querySelector('.userComm__putComment').classList.contains('hidden')) {
+                            document.querySelectorAll('#putCommentContent').forEach(content => {
+                                content.value = '';
+                            });
+                            document.querySelector('.userComm__putComment').classList.add('hidden');
+                        } else {
+                            const target = e.target;
+                            const userCommPutComment = target.parentElement.querySelector('.userComm__putComment');
+                            userCommPutComment.classList.toggle('hidden');
+                        }
+                    });
+                  });
+
+                document.querySelectorAll('.overlayAddComment__cancelCommentbtn').forEach(cancel => {
+                    cancel.addEventListener('click', (e) => {
+                        document.querySelectorAll('#putCommentContent').forEach(content => {
+                            content.value = '';
+                        });
+                        const userCommPutComment = e.target.parentElement;
+                        userCommPutComment.classList.toggle('hidden');
+                    });
+                  });
+
+
+                  ///////////////////////////////// REQUEST PUT COMMENT  ///////////////////////////////
+
+                  document.querySelector('.comments').addEventListener('submit', (e) => {
+                        e.preventDefault();
+        
+                        if (e.target.classList.contains('userComm__putCommen--putCommentForm')) {
+                            let putComment = e.target.querySelector('#putCommentContent').value;
+                            let idComment = e.target.parentElement.parentElement.getAttribute('data-id');
+                            let post_id = localStorage.getItem('post_id');
+                            if (putComment === '') {
+                              document.querySelector('.errPutComment').textContent = 'Veuillez écrire quelque chose ..., merci.';
+                              document.querySelector('.errPutComment').style.color = 'red';
+                              document.querySelector('.errPutComment').style.fontSize = '1.5rem';
+                              setTimeout(() => {
+                                document.querySelector('.errPutComment').textContent = ''
+                              }, 1800)
+                            } else {
+                              let putComObj = {
+                                comment: putComment
+                              }
+                              fetch(`http://localhost:3000/api/post/${post_id}/commentput/${idComment}`, {
+                                  method: 'PUT',
+                                  body: JSON.stringify(putComObj),
+                                  headers: {
+                                    'accept': 'application/json',
+                                    'content-type': 'application/json',
+                                    'authorization': `Bearer ${token}`
+                                  }
+                                })
+                                .then(data => {
+                                  return data.json()
+                                })
+                                .then(res => {
+                                  console.log(res);
+                                  location.reload();
+                                })
+                            }
+                          }
+                        })
+                    })
+                } 
+                
 
         //////////////////////////// REQUEST POST COMMENT ////////////////////////////////////////
 
@@ -350,7 +430,7 @@ function sendScan() {
 
             let sendMessage = document.querySelector('#commentToAdd').value;
             let pseudo = localStorage.getItem('pseudo');
-
+            let id = localStorage.getItem('post_id');
             let sendMsg = {
                 pseudo: pseudo,
                 message: sendMessage,
@@ -375,5 +455,3 @@ function sendScan() {
         });
 
 
-
-    }
