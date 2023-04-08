@@ -68,5 +68,19 @@ exports.putComment = (req, res) => {
 
 exports.deleteComment = (req, res) => {
 
+    const id = req.params.id;
+    console.log(id);
+
+    const sql = `DELETE FROM Comment WHERE id =?`;
+
+    db.query(sql, id, (err, result) => {
+        if(err) {
+            console.log(err);
+            res.status(500).json({message: 'Erreur Serveur...'})
+        } else {
+            res.status(200).json({message: 'Commentaire supprimé !'})
+        }
+    })
+
 
 }

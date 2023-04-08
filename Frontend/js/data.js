@@ -344,11 +344,14 @@ function sendScan() {
                      
                     const pseudo_user = localStorage.getItem('pseudo');
     
-                    
+                    // <div class='putCommentBtnGestion'>  </div>
                     for(let comment of res) {
                         document.querySelector('.comments').innerHTML += `<div class='userComm' data-id='${comment.id}'>
                                                                             <span class='userAuthor'>${comment.pseudo_user}</span>:  ${comment.message}
+                                                                           
                                                                             <button type="submit" class="putCommentBtn">Modifier</button>
+                                                                            <button type="button" class="cancelCommentBtn">supprimer</button>
+                                                                          
                                                                             <div class="userComm__putComment hidden">
                                                                             <form class="userComm__putCommen--putCommentForm">
                                                                             
@@ -382,11 +385,15 @@ function sendScan() {
                                                                        document.querySelectorAll('.userComm').forEach(commentElement => {
                                                                         const userAuthorElement = commentElement.querySelector('.userAuthor');
                                                                         const putCommentBtnElement = commentElement.querySelector('.putCommentBtn');
+                                                                        const cancelPutCommentBtnElement = commentElement.querySelector('.cancelCommentBtn');
 
                                                                         if (userAuthorElement.textContent === pseudo_user) {
                                                                             putCommentBtnElement.style.display = 'block';
+                                                                            putCommentBtnElement.style.backgroundColor = 'lightblue';
+                                                                            cancelPutCommentBtnElement.style.backgroundColor = 'pink';
                                                                         } else {
                                                                             putCommentBtnElement.style.display = 'none';
+                                                                            cancelPutCommentBtnElement.style.display = 'none';
                                                                         }
                                                                         });
 
@@ -456,10 +463,46 @@ function sendScan() {
                                 }
                               }
 
-                              //////////////////////////////  REQUEST DELETE COMMENT ///////////////////////////////////
-
                               
                             })
+
+                            //////////////////////////////  REQUEST DELETE COMMENT ///////////////////////////////////
+
+                            document.querySelectorAll('.cancelCommentBtn').forEach( deleteBtn => {
+                              deleteBtn.addEventListener('click', (e) => {
+                                 e.preventDefault();
+                              let idComment = e.target.parentElement.getAttribute('data-id');
+                              let post_id = localStorage.getItem('post_id');
+                            console.log(idComment, post_id);
+
+                                if(confirm('Voulez-vous vraiment supprimer votre commentaire ?') == true) {
+
+  
+                                    fetch(`http://localhost:3000/api/post/${post_id}/commentdelete/${idComment}`, {
+                                      method: 'DELETE',
+                                      headers: {
+                                          'accept': 'application/json',
+                                          'content-type': 'application/json',
+                                          'authorization': `Bearer ${token}`
+                                      }
+                                    })
+                                    .then( data => { return data.json()})
+                                    .then( res => {
+  
+                                      console.log(res);
+  
+  
+                                    })
+  
+
+                                }
+
+                                 
+                                  
+
+                               })
+                             })
+
                         })
     
     
