@@ -172,241 +172,299 @@ function sendScan() {
    //////////////////////// POST VIEW ///////////////////////
     if(document.URL.includes('/post_view.html')) {
 
-        // const user_id = localStorage.getItem('user_id');
+        const user_id = localStorage.getItem('user_id');
 
-        // fetch(`http://localhost:3000/api/getuser/${user_id}`, {
-        //     method: 'GET',
-        //     headers: {
-        //         'accept': 'application/json',
-        //         'content-type': 'application/json',
-        //         'authorization': `Bearer ${token}`
-        //     }
-        // })
-        // .then(data => {return data.json()})
-        // .then(res => {
-        //     console.log(res);
-        // })
-
-        const id = localStorage.getItem('post_id');
-        
-        //////////////// GESTION RECUPERATION ID DATA /////////////////
-        fetch(`http://localhost:3000/api/post/${id}`, {
-            method:'GET',
+        fetch(`http://localhost:3000/api/getuser/${user_id}`, {
+            method: 'GET',
             headers: {
                 'accept': 'application/json',
                 'content-type': 'application/json',
-                'authorization' : `Bearer ${token}`
+                'authorization': `Bearer ${token}`
             }
         })
         .then(data => {return data.json()})
-        .then(res => {
+        .then(resuser => {
+            console.log(resuser);
 
-            console.log(res);
-
-            const scanTitle = document.querySelector('.scan > h1');
-            const scanPicture = document.querySelector('.scan > img');
-            const scanMessage = document.querySelector('.scan > p');
-
-            const btnOverlayDeleteScan = document.querySelector('.scan__btnScanGestion--deleteScan');
-            const overlayDeleteScan = document.querySelector('.overlayDeleteScan');
-            const cancelOverlayDelete = document.querySelector('.cancelDeleteScan');
-            const btnDeleteScan = document.querySelector('.deleteScan');
-
-            const btnPutScan = document.querySelector('.scan__btnScanGestion--putScan');
+           
+            const id = localStorage.getItem('post_id');
         
-            for(let i of res) {
-                scanTitle.textContent = `${i.title}`;
-                scanPicture.src = `${i.picture}`;
-                scanMessage.textContent = `${i.message}`;
-            }
-
-            ///////////////////// GESTION DELETE SCAN REQUEST //////////////////
-            btnOverlayDeleteScan.addEventListener('click', () => {
-                overlayDeleteScan.style.display = 'block'
-            })
-            cancelOverlayDelete.addEventListener('click', () => {
-                overlayDeleteScan.style.display = 'none'
-            })
-            btnDeleteScan.addEventListener('click', () => {
-
-               // const token = localStorage.getItem('token');
-
-                fetch(`http://localhost:3000/api/deletepost/${id}`, {
-                    method: 'DELETE',
-                    headers: {
-                        'accept' : 'application/json',
-                        'content-type' : 'application/json',
-                        'authorization': `Bearer ${token}`
-                    }
-                }).then(data => { return data.json()})
-                .then(res => {
-                    console.log(res);
-                    alert('Le Scan a bien été supprimé !');
-                    localStorage.removeItem('post_id')
-                    location.replace('/Frontend/pages/fil-posts.html');
-                })
-            })
-
-            ///////////////////////GESTION REQUÊTE PUT SCAN //////////////////////
-
-            const cancelOverlayPutScan = document.querySelector('.putScanForm__cancelPutScanbtn');
-            const displayOverlayPutScan = document.querySelector('.scan__btnScanGestion--putScan');
-            const putScanForm = document.querySelector('.putScanForm');
-
-            displayOverlayPutScan.addEventListener('click', () => {
-                putScanForm.style.display = 'block';
-            });
-            cancelOverlayPutScan.addEventListener('click', () => {
-                putScanForm.style.display = 'none';
-            })
-
-
-            putScanForm.addEventListener('submit', (e) => {
-                e.preventDefault();
-      
-
-                const titleInput = document.querySelector('#titlePut').value;
-                const pictureInput = document.querySelector('#picturePut').value;
-                const messageInput = document.querySelector('#messagePut').value;
-
-                let putScan = {
-                    title: titleInput,
-                    picture: pictureInput,
-                    message: messageInput
-                }
-
-                if( titleInput != '' || pictureInput != '' || messageInput != '') {
-                    
-                    fetch(`http://localhost:3000/api/putpost/${id}`, {
-                        method: 'PUT',
-                        body: JSON.stringify(putScan),
-                        headers: {
-                            'accept': 'application/json',
-                            'content-type': 'application/json',
-                            'authorization': `Bearer ${token}`
-                        }
-                    })
-                    .then( data => { return data.json()})
-                    .then(res => {
-                        console.log(res);
-                        alert('Scan Modifié !');
-                        location.reload();
-                    })
-                   
-
-                } else {
-
-                    document.querySelector('.errPutScanMsg').textContent = 'Veuillez remplir au moins un champs à modifier ...';
-                    document.querySelector('.errPutScanMsg').style.color = 'red';
-                    document.querySelector('.errPutScanMsg').style.fontSize = '1.2rem';
-                    document.querySelector('.errPutScanMsg').style.fontWeight = 'bold';
-
-                    setTimeout(() => {
-                        document.querySelector('.errPutScanMsg').textContent = '';
-                    },1800);
-
-                }
-            })
-        })
-
-        /////////////////////////// REQUEST GET COMMENTS ////////////////////////////////////////
-
-        fetch(`http://localhost:3000/api/post/${id}/comments`, {
-                method: 'GET',
+        
+            //////////////// GESTION RECUPERATION ID DATA /////////////////
+            fetch(`http://localhost:3000/api/post/${id}`, {
+                method:'GET',
                 headers: {
                     'accept': 'application/json',
                     'content-type': 'application/json',
-                    'authorization': `Bearer ${token}`
+                    'authorization' : `Bearer ${token}`
                 }
             })
-            .then(data => { return data.json()})
+            .then(data => {return data.json()})
             .then(res => {
-                console.log(res);
-
-                for(let comment of res) {
-                    document.querySelector('.comments').innerHTML += `<div class='userComm' data-id='${comment.id}'>
-                                                                        <span>${comment.pseudo_user}</span>: ${comment.message}
-                                                                        <button type="submit" class="putCommentBtn">Modifier</button>
-                                                                        <div class="userComm__putComment hidden">
-                                                                        <form class="userComm__putCommen--putCommentForm">
-                                                    
-                                                                        <h3>Changes d'avis, ici ! xp</h3>
-                                                                                <textarea name="putCommentContent" id="putCommentContent" cols="5 " rows="3"></textarea>
-                                                                                <button type="submit" class="sendPutCommentBtn" >Envoyer</button>
-                                                                                </form>
-                                                                                <button type="button" class="overlayAddComment__cancelCommentbtn">Annuler</button>
-                                                                            <p class='errPutComment'></p> 
-                                                                            </div>
-                                                                        </div> `;
+    
+                for(let obj of resuser) {
+                    if(obj.admin == true || obj.admin == false) {
+                        const admin = obj.admin;
+                        console.log(admin);
+                        for(let i of res) {
+                            
+                            if(admin == true) {
+                                document.querySelector('.scan__btnScanGestion').style.display = 'block';
+                            } else if( user_id != i.user_id || admin == false) {
+                                document.querySelector('.scan__btnScanGestion').style.display = 'none';
+                            }
+                        }         
+                    } 
                 }
 
-                document.querySelectorAll('.putCommentBtn').forEach(com => {
-                    com.addEventListener('click', (e) => {
-                        if (!document.querySelector('.userComm__putComment').classList.contains('hidden')) {
+                
+    
+    
+                console.log(res);
+    
+                const scanTitle = document.querySelector('.scan > h1');
+                const scanPicture = document.querySelector('.scan > img');
+                const scanMessage = document.querySelector('.scan > p');
+    
+                const btnOverlayDeleteScan = document.querySelector('.scan__btnScanGestion--deleteScan');
+                const overlayDeleteScan = document.querySelector('.overlayDeleteScan');
+                const cancelOverlayDelete = document.querySelector('.cancelDeleteScan');
+                const btnDeleteScan = document.querySelector('.deleteScan');
+    
+                const btnPutScan = document.querySelector('.scan__btnScanGestion--putScan');
+            
+                for(let i of res) {
+                    scanTitle.textContent = `${i.title}`;
+                    scanPicture.src = `${i.picture}`;
+                    scanMessage.textContent = `${i.message}`;
+                }
+    
+                ///////////////////// GESTION DELETE SCAN REQUEST //////////////////
+                btnOverlayDeleteScan.addEventListener('click', () => {
+                    overlayDeleteScan.style.display = 'block'
+                })
+                cancelOverlayDelete.addEventListener('click', () => {
+                    overlayDeleteScan.style.display = 'none'
+                })
+                btnDeleteScan.addEventListener('click', () => {
+    
+                   // const token = localStorage.getItem('token');
+    
+                    fetch(`http://localhost:3000/api/deletepost/${id}`, {
+                        method: 'DELETE',
+                        headers: {
+                            'accept' : 'application/json',
+                            'content-type' : 'application/json',
+                            'authorization': `Bearer ${token}`
+                        }
+                    }).then(data => { return data.json()})
+                    .then(res => {
+                        console.log(res);
+                        alert('Le Scan a bien été supprimé !');
+                        localStorage.removeItem('post_id')
+                        location.replace('/Frontend/pages/fil-posts.html');
+                    })
+                })
+    
+                ///////////////////////GESTION REQUÊTE PUT SCAN //////////////////////
+    
+                const cancelOverlayPutScan = document.querySelector('.putScanForm__cancelPutScanbtn');
+                const displayOverlayPutScan = document.querySelector('.scan__btnScanGestion--putScan');
+                const putScanForm = document.querySelector('.putScanForm');
+    
+                displayOverlayPutScan.addEventListener('click', () => {
+                    putScanForm.style.display = 'block';
+                });
+                cancelOverlayPutScan.addEventListener('click', () => {
+                    putScanForm.style.display = 'none';
+                })
+    
+    
+                putScanForm.addEventListener('submit', (e) => {
+                    e.preventDefault();
+          
+    
+                    const titleInput = document.querySelector('#titlePut').value;
+                    const pictureInput = document.querySelector('#picturePut').value;
+                    const messageInput = document.querySelector('#messagePut').value;
+    
+                    let putScan = {
+                        title: titleInput,
+                        picture: pictureInput,
+                        message: messageInput
+                    }
+    
+                    if( titleInput != '' || pictureInput != '' || messageInput != '') {
+                        
+                        fetch(`http://localhost:3000/api/putpost/${id}`, {
+                            method: 'PUT',
+                            body: JSON.stringify(putScan),
+                            headers: {
+                                'accept': 'application/json',
+                                'content-type': 'application/json',
+                                'authorization': `Bearer ${token}`
+                            }
+                        })
+                        .then( data => { return data.json()})
+                        .then(res => {
+                            console.log(res);
+                            alert('Scan Modifié !');
+                            location.reload();
+                        })
+                       
+    
+                    } else {
+    
+                        document.querySelector('.errPutScanMsg').textContent = 'Veuillez remplir au moins un champs à modifier ...';
+                        document.querySelector('.errPutScanMsg').style.color = 'red';
+                        document.querySelector('.errPutScanMsg').style.fontSize = '1.2rem';
+                        document.querySelector('.errPutScanMsg').style.fontWeight = 'bold';
+    
+                        setTimeout(() => {
+                            document.querySelector('.errPutScanMsg').textContent = '';
+                        },1800);
+    
+                    }
+                })
+            })
+    
+            /////////////////////////// REQUEST GET COMMENTS ////////////////////////////////////////
+    
+            fetch(`http://localhost:3000/api/post/${id}/comments`, {
+                    method: 'GET',
+                    headers: {
+                        'accept': 'application/json',
+                        'content-type': 'application/json',
+                        'authorization': `Bearer ${token}`
+                    }
+                })
+                .then(data => { return data.json()})
+                .then(res => {
+                    console.log(res);
+                     
+                    const pseudo_user = localStorage.getItem('pseudo');
+    
+                    
+                    for(let comment of res) {
+                        document.querySelector('.comments').innerHTML += `<div class='userComm' data-id='${comment.id}'>
+                                                                            <span class='userAuthor'>${comment.pseudo_user}</span>:  ${comment.message}
+                                                                            <button type="submit" class="putCommentBtn">Modifier</button>
+                                                                            <div class="userComm__putComment hidden">
+                                                                            <form class="userComm__putCommen--putCommentForm">
+                                                                            
+                                                                            <h3>Changes d'avis, ici ! xp</h3>
+                                                                            <textarea name="putCommentContent" id="putCommentContent" cols="5 " rows="3"></textarea>
+                                                                            <button type="submit" class="sendPutCommentBtn" >Envoyer</button>
+                                                                            </form>
+                                                                            <button type="button" class="overlayAddComment__cancelCommentbtn">Annuler</button>
+                                                                            <p class='errPutComment'></p> 
+                                                                            </div>
+                                                                            </div> `;    
+                                                                            
+                                                                            console.log(comment.pseudo_user);
+                                                                        }
+                                                                        
+
+                                                                        // for(let obj of resuser) {
+                                                                        //     if(obj.admin == true || obj.admin == false) {
+                                                                        //         const admin = obj.admin;
+                                                                        //         console.log(admin);
+                                                                        //         for(let i of res) {
+                                                                                    
+                                                                        //             if(admin == true) {
+                                                                        //                 document.querySelector('.scan__btnScanGestion').style.display = 'block';
+                                                                        //             } else if( user_id != i.user_id || admin == false) {
+                                                                        //                 document.querySelector('.scan__btnScanGestion').style.display = 'none';
+                                                                        //             }
+                                                                        //         }         
+                                                                        //     } 
+                                                                        // }
+                                                                       document.querySelectorAll('.userComm').forEach(commentElement => {
+                                                                        const userAuthorElement = commentElement.querySelector('.userAuthor');
+                                                                        const putCommentBtnElement = commentElement.querySelector('.putCommentBtn');
+
+                                                                        if (userAuthorElement.textContent === pseudo_user) {
+                                                                            putCommentBtnElement.style.display = 'block';
+                                                                        } else {
+                                                                            putCommentBtnElement.style.display = 'none';
+                                                                        }
+                                                                        });
+
+                                                                
+                    document.querySelectorAll('.putCommentBtn').forEach(com => {
+                        com.addEventListener('click', (e) => {
+                            if (!document.querySelector('.userComm__putComment').classList.contains('hidden')) {
+                                document.querySelectorAll('#putCommentContent').forEach(content => {
+                                    content.value = '';
+                                });
+                                document.querySelector('.userComm__putComment').classList.add('hidden');
+                            } else {
+                                const target = e.target;
+                                const userCommPutComment = target.parentElement.querySelector('.userComm__putComment');
+                                userCommPutComment.classList.toggle('hidden');
+                            }
+                        });
+                      });
+    
+                    document.querySelectorAll('.overlayAddComment__cancelCommentbtn').forEach(cancel => {
+                        cancel.addEventListener('click', (e) => {
                             document.querySelectorAll('#putCommentContent').forEach(content => {
                                 content.value = '';
                             });
-                            document.querySelector('.userComm__putComment').classList.add('hidden');
-                        } else {
-                            const target = e.target;
-                            const userCommPutComment = target.parentElement.querySelector('.userComm__putComment');
+                            const userCommPutComment = e.target.parentElement;
                             userCommPutComment.classList.toggle('hidden');
-                        }
-                    });
-                  });
-
-                document.querySelectorAll('.overlayAddComment__cancelCommentbtn').forEach(cancel => {
-                    cancel.addEventListener('click', (e) => {
-                        document.querySelectorAll('#putCommentContent').forEach(content => {
-                            content.value = '';
                         });
-                        const userCommPutComment = e.target.parentElement;
-                        userCommPutComment.classList.toggle('hidden');
-                    });
-                  });
-
-
-                  ///////////////////////////////// REQUEST PUT COMMENT  ///////////////////////////////
-
-                  document.querySelector('.comments').addEventListener('submit', (e) => {
-                        e.preventDefault();
-        
-                        if (e.target.classList.contains('userComm__putCommen--putCommentForm')) {
-                            let putComment = e.target.querySelector('#putCommentContent').value;
-                            let idComment = e.target.parentElement.parentElement.getAttribute('data-id');
-                            let post_id = localStorage.getItem('post_id');
-                            if (putComment === '') {
-                              document.querySelector('.errPutComment').textContent = 'Veuillez écrire quelque chose ..., merci.';
-                              document.querySelector('.errPutComment').style.color = 'red';
-                              document.querySelector('.errPutComment').style.fontSize = '1.5rem';
-                              setTimeout(() => {
-                                document.querySelector('.errPutComment').textContent = ''
-                              }, 1800)
-                            } else {
-                              let putComObj = {
-                                comment: putComment
-                              }
-                              fetch(`http://localhost:3000/api/post/${post_id}/commentput/${idComment}`, {
-                                  method: 'PUT',
-                                  body: JSON.stringify(putComObj),
-                                  headers: {
-                                    'accept': 'application/json',
-                                    'content-type': 'application/json',
-                                    'authorization': `Bearer ${token}`
+                      });
+    
+    
+                      ///////////////////////////////// REQUEST PUT COMMENT  ///////////////////////////////
+    
+                      document.querySelector('.comments').addEventListener('submit', (e) => {
+                            e.preventDefault();
+            
+                            if (e.target.classList.contains('userComm__putCommen--putCommentForm')) {
+                                let putComment = e.target.querySelector('#putCommentContent').value;
+                                let idComment = e.target.parentElement.parentElement.getAttribute('data-id');
+                                let post_id = localStorage.getItem('post_id');
+                                if (putComment === '') {
+                                  document.querySelector('.errPutComment').textContent = 'Veuillez écrire quelque chose ..., merci.';
+                                  document.querySelector('.errPutComment').style.color = 'red';
+                                  document.querySelector('.errPutComment').style.fontSize = '1.5rem';
+                                  setTimeout(() => {
+                                    document.querySelector('.errPutComment').textContent = ''
+                                  }, 1800)
+                                } else {
+                                  let putComObj = {
+                                    comment: putComment
                                   }
-                                })
-                                .then(data => {
-                                  return data.json()
-                                })
-                                .then(res => {
-                                  console.log(res);
-                                  location.reload();
-                                })
-                            }
-                          }
+                                  fetch(`http://localhost:3000/api/post/${post_id}/commentput/${idComment}`, {
+                                      method: 'PUT',
+                                      body: JSON.stringify(putComObj),
+                                      headers: {
+                                        'accept': 'application/json',
+                                        'content-type': 'application/json',
+                                        'authorization': `Bearer ${token}`
+                                      }
+                                    })
+                                    .then(data => {
+                                      return data.json()
+                                    })
+                                    .then(res => {
+                                      console.log(res);
+                                      location.reload();
+                                    })
+                                }
+                              }
+
+                              //////////////////////////////  REQUEST DELETE COMMENT ///////////////////////////////////
+
+                              
+                            })
                         })
-                    })
-                } 
+    
+    
+        })
+      } 
                 
 
         //////////////////////////// REQUEST POST COMMENT ////////////////////////////////////////
