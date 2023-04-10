@@ -57,7 +57,7 @@ try {
                     res.status(200).json({
                         id: id,
                         pseudo: pseudo,
-                        token: jwt.sign({id: id}, 'HARD_SECRET_TOKEN' , { expiresIn: '24h' })
+                        token: jwt.sign({id: id}, process.env.TOKEN , { expiresIn: '24h' })
                     });
                 }
             })
@@ -110,23 +110,36 @@ exports.deleteUser = (req,res) => {
 
 }
 
-exports.putUser = (req, res, next) => {
+exports.putUser = async (req, res, next) => {
 
     const id = req.params.id;
     const pseudo = req.body.pseudo;
-    const email = req.body.pseudo;
+    const nom = req.body.nom;
+    const prenom = req.body.prenom;
     const password = req.body.password;
-    const pic = req.body.picture;
 
-    const putData = `UPDATE Users SET '${pseudo}', '${email}', '${password}', '${pic}' WHERE 'id' = '${id}';`;
+    const salt = await bcrypt.genSalt(5);
+        const cryptPass = await bcrypt.hash(password, salt);
 
-    db.query(putData, (err, result) => {
-        if(!result) {
-            res.status(400).json({message: 'Mauvaise requête !'});
+        
+    db.query('DELETE FROM comment WHERE pseudo_user = ?', [pseudo], (err, result) => {
+        if (err) {
+            console.log(pseudo);
+          console.log(err);
+          res.status(400).json({message: 'Mauvaise requête !'});
         } else {
-            res.status(200).json({message: 'Vos données ont été modifiées'})
+          // Met à jour la ligne de la table `users`
+          const putData = `UPDATE Users SET nom=?, prenom=?, pseudo=?, password=? WHERE id = ?;`;
+          db.query(putData, [prenom, nom, pseudo, cryptPass, id], (err, result) => {
+            if (err) {
+              console.log(err);
+              res.status(400).json({message: 'Mauvaise requête !'});
+            } else {
+              res.status(200).json({message: 'Vos données ont été modifiées', pseudoUpd: pseudo});
+            }
+          });
         }
-    })
+      });
 
 }
 
