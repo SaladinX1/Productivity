@@ -490,11 +490,10 @@ function sendScan() {
                                     .then( res => {
   
                                       console.log(res);
+                                      location.reload();
   
   
                                     })
-  
-
                                 }
 
                                  
