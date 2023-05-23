@@ -40,7 +40,7 @@ exports.login = (req, res, next) =>  {
 try {
     const sql = `SELECT id, nom, prenom, pseudo, password FROM Users WHERE mail=?`;
     db.query(sql, mailConn, (err, result) => {
-        console.log('RESULT:',result);
+        
         if (err) {
             res.status(500).json({message: 'Erreur serveur !'});
         } else if (!result[0]) {
@@ -117,6 +117,7 @@ exports.putUser = async (req, res, next) => {
     const nom = req.body.nom;
     const prenom = req.body.prenom;
     const password = req.body.password;
+    const admin = req.body.admin;
 
     const salt = await bcrypt.genSalt(5);
         const cryptPass = await bcrypt.hash(password, salt);
@@ -129,10 +130,11 @@ exports.putUser = async (req, res, next) => {
           res.status(400).json({message: 'Mauvaise requête !'});
         } else {
           // Met à jour la ligne de la table `users`
-          const putData = `UPDATE Users SET nom=?, prenom=?, pseudo=?, password=? WHERE id = ?;`;
-          db.query(putData, [prenom, nom, pseudo, cryptPass, id], (err, result) => {
+          const putData = `UPDATE Users SET nom=?, prenom=?, pseudo=?, password=?, admin=? WHERE id = ?;`;
+         
+          db.query(putData, [prenom, nom, pseudo, cryptPass,admin, id], (err, result) => {
             if (err) {
-              console.log(err);
+          
               res.status(400).json({message: 'Mauvaise requête !'});
             } else {
               res.status(200).json({message: 'Vos données ont été modifiées', pseudoUpd: pseudo});
