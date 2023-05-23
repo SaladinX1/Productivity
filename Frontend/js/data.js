@@ -19,7 +19,6 @@ window.addEventListener('load', () => {
         })
         .then(res => {return res.json()})
         .then(data => {
-            console.log(data);
             for(let info_user of data) {
                 data_userProfile.innerHTML += `   
                 <h3>Nom: ${info_user.nom}</h3>
@@ -79,16 +78,15 @@ function deleteAccount() {
 
         console.log(data);
 
-        for(let info of data ) {
-            console.log(info.picture);
+        for(let info of data) {
+         
             blog.innerHTML += `
             <div class='fil__blog--post' data-id='${info.id}'>
                     <h1>${info.title}</h1>
                     <img src='${info.picture}' alt='Image du post'/>
                     <div class="fil__blog--post_sampleAnnounce">
                     <p>${info.message}</p>
-                    </div>
-                    
+                    </div>  
             </div>
             `
         }
@@ -201,7 +199,7 @@ function sendScan() {
             })
             .then(data => {return data.json()})
             .then(res => {
-    
+    console.log(resuser);
                 for(let obj of resuser) {
                     if(obj.admin == true || obj.admin == false) {
                         const admin = obj.admin;
@@ -457,7 +455,6 @@ function sendScan() {
                                       return data.json()
                                     })
                                     .then(res => {
-                                      console.log(res);
                                       location.reload();
                                     })
                                 }
@@ -511,47 +508,51 @@ function sendScan() {
 
         //////////////////////////// REQUEST POST COMMENT ////////////////////////////////////////
 
-        const btnOverlayComment = document.querySelector('.addCommentBtn');
-        const btnCancelOverlayComment = document.querySelector('.overlayAddComment__cancelCommentbtn');
-        const overlayComment = document.querySelector('.overlayAddComment');
-        const formComment = document.querySelector('.overlayAddComment__commentForm');
-
-        btnOverlayComment.addEventListener('click', () => {
-            overlayComment.style.display = 'block';
-        })
-      
-        btnCancelOverlayComment.addEventListener('click', () => {
-            overlayComment.style.display = 'none';
-        })
-
-
-        formComment.addEventListener('submit', (e) => {
-        e.preventDefault();
-
-            let sendMessage = document.querySelector('#commentToAdd').value;
-            let pseudo = localStorage.getItem('pseudo');
-            let id = localStorage.getItem('post_id');
-            let sendMsg = {
-                pseudo: pseudo,
-                message: sendMessage,
-            };
-
-            fetch(`http://localhost:3000/api/post/${id}/comment`, {
-                method: 'POST',
-                body: JSON.stringify(sendMsg),
-                headers: {
-                    'accept': 'application/json',
-                    'content-type': 'application/json',
-                    'authorization': `Bearer ${token}`
-                }
+        
+        if (document.URL.includes('post_view.html')) {
+            const btnOverlayComment = document.querySelector('.addCommentBtn');
+            const btnCancelOverlayComment = document.querySelector('.overlayAddComment__cancelCommentbtn');
+            const overlayComment = document.querySelector('.overlayAddComment');
+            const formComment = document.querySelector('.overlayAddComment__commentForm');
+            btnOverlayComment.addEventListener('click', () => {
+                overlayComment.style.display = 'block';
             })
-            .then(data => { return data.json()})
-            .then(res => {
-                console.log(res);
-                alert('Merci de ton partages !');
-                location.reload();
+          
+            btnCancelOverlayComment.addEventListener('click', () => {
+                overlayComment.style.display = 'none';
             })
+            
+            formComment.addEventListener('submit', (e) => {
+            e.preventDefault();
+    
+                let sendMessage = document.querySelector('#commentToAdd').value;
+                let pseudo = localStorage.getItem('pseudo');
+                let id = localStorage.getItem('post_id');
+                let sendMsg = {
+                    pseudo: pseudo,
+                    message: sendMessage,
+                };
+    
+                fetch(`http://localhost:3000/api/post/${id}/comment`, {
+                    method: 'POST',
+                    body: JSON.stringify(sendMsg),
+                    headers: {
+                        'accept': 'application/json',
+                        'content-type': 'application/json',
+                        'authorization': `Bearer ${token}`
+                    }
+                })
+                .then(data => { return data.json()})
+                .then(res => {
+                    console.log(res);
+                    alert('Merci de ton partages !');
+                    location.reload();
+                })
+    
+            });
+        }
 
-        });
+
+
 
 
