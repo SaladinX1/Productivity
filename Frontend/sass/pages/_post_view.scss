@@ -176,3 +176,29 @@
     padding: 10px;
     resize: none;
 }
+
+.userComm{
+    font-size: 2rem;   
+    text-align: center; 
+    margin: 25px auto;
+    border-bottom: 2px solid rebeccapurple;
+}
+.userAuthor {
+   color: #2bcaee;
+}
+
+
+.hidden{
+    display: none;
+}
+
+#putCommentContent {
+    text-align: center;
+    font-size: 1.2rem;
+    width: 80%;
+    margin: 20px auto;
+    font-weight: bold;
+    border-radius: 15px;
+    padding: 10px;
+    resize: none;
+}

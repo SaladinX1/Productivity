@@ -1,12 +1,8 @@
 
 .fil {
-    // background-image: linear-gradient(60deg, rgb(215, 215, 215), rgb(255, 255, 255), rgb(215, 215, 215));
-    //  margin: 10% auto;
+   
       position: relative;
-    //  height: 150vh;
-    //  background-color: rgb(40, 42, 42);
-
-
+      
      &__headerPicBrand {
         & img {
             position: absolute;
@@ -20,7 +16,7 @@
  
      &__pic {
  
-      // position: relative;
+         
          background-size: cover;
          background-repeat: no-repeat;
          background-position: center center;
@@ -28,7 +24,7 @@
        
 
          width: 100%;
-         height: 100%;
+         height: 100vh;
        
          object-fit: cover;
         
@@ -42,7 +38,6 @@
              font-family:'Caveat', Arial, Helvetica, sans-serif;
              text-align: center;
              color: white;
- 
              margin: 20px;
          } 
          
