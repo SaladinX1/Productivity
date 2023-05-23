@@ -6,10 +6,13 @@ const db = require('../database/db.script');
 exports.addPost = (req, res) => {
 
     const user_id = req.user.id;
-  
-    const { title, message } = req.body; 
 
+    const { title, message } = req.body; 
+    
+  
     const picture = `${req.protocol}://${req.get('host')}/images/${req.file.filename}`;
+
+
     console.log(picture);
 
     const addScan = `INSERT INTO Post (title, picture, message, user_id) VALUES (?, ?, ?, ?)`;
@@ -32,7 +35,7 @@ exports.allPosts = (req,res, next) => {
     db.query(Post,(err, result) => {
         if(!result) {
             console.log(err);
-            res.status(400).json({message:'Echec de la recuperation, mauvaise requête !'})
+            res.status(400).json({message:'Mauvaise requête !'})
         } else {
             res.status(200).json(result);
         }
