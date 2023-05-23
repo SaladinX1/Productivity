@@ -29,6 +29,12 @@
 
         <div class="info_user__data">
            
+            
+            <div class="info_user--delete">
+                <h4>Voulez-vous vraiment suprimer votre compte ? <br>  /!\ (Cette action est définitive) /!\</h4>
+                <button  id="delete_user" onclick="deleteAccount()" >Confirmer</button>
+                <button type="button" id="delete_user--cancel" onclick="cancelDelete()">Annuler</button>
+            </div>
 
             <form id="info_user--put">
     
@@ -46,23 +52,14 @@
                 <input id="pseudoPut" type="text" placeholder="pseudo" name="pseudo">
                 <p id="pseudoErrMsgPut"></p>
 
-                <label for="mailPut"></label>
-                <input id="mailPut" type="email" name="mail" placeholder="E-mail">
-                <p id="mailErrMsgPut"></p>
-
                 <label for="passwordPut"></label>
                 <input id="passwordPut" type="password" name="password" placeholder="password">
                 <p id="passwordErrMsgPut"></p>
     
                 <input type="submit" value="Modifier" class="btn__put">
-                <input type="submit" value="Annuler" onclick="cancelPutForm()" class="btn__cancelPut">
+                <input value="Annuler" onclick="cancelPutForm()" class="btn__cancelPut">
             </form>
 
-            <div class="info_user--delete">
-                <h4>Voulez-vous vraiment suprimer votre compte ? <br>  /!\ (Cette action est définitive) /!\</h4>
-                <button  id="delete_user" onclick="deleteAccount()" >Confirmer</button>
-                <button type="button" id="delete_user--cancel" onclick="cancelDelete()">Annuler</button>
-            </div>
 
         </div>
 
@@ -73,8 +70,8 @@
 
     </footer>
     
-    <script src="../js/form.js"></script>
     <script src="../js/data.js"></script>
+    <script src="../js/form.js"></script>
     <script src="../js/log.js"></script>
 
 </body>
