@@ -13,8 +13,6 @@ exports.addPost = (req, res) => {
     const picture = `${req.protocol}://${req.get('host')}/images/${req.file.filename}`;
 
 
-    console.log(picture);
-
     const addScan = `INSERT INTO Post (title, picture, message, user_id) VALUES (?, ?, ?, ?)`;
 
     db.query(addScan,[title, picture, message, user_id], (err, result) => {
@@ -77,17 +75,19 @@ exports.deletePost = (req, res, next) => {
 };
 
 exports.putPost = (req, res, next) => {
-
+console.log(req.body);
     const id = req.params.id;
 
     const { title,
-        message, picture
+        message,
     } = req.body;
 
-    const putPost = `UPDATE Post SET title='${title}', picture='${picture}', message='${message}' WHERE id =?;`
+   // const picture = `${req.protocol}://${req.get('host')}/images/${req.body.picture}`;
+//    picture=?
+    const putPost = `UPDATE Post SET title=?, message=? WHERE id =?;`
 
-
-    db.query(putPost, id, (err, result) => {
+    // picture,
+    db.query(putPost, [title,message,id], (err, result) => {
         if(!result) {
             console.log(err);
             res.status(400).json({message: 'Mauvaise requête'});

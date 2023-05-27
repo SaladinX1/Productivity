@@ -76,7 +76,6 @@ function deleteAccount() {
     .then(res => { return res.json()})
     .then(data => {
 
-        console.log(data);
 
         for(let info of data) {
          
@@ -182,11 +181,8 @@ function sendScan() {
         })
         .then(data => {return data.json()})
         .then(resuser => {
-            console.log(resuser);
-
            
             const id = localStorage.getItem('post_id');
-        
         
             //////////////// GESTION RECUPERATION ID DATA /////////////////
             fetch(`http://localhost:3000/api/post/${id}`, {
@@ -199,11 +195,10 @@ function sendScan() {
             })
             .then(data => {return data.json()})
             .then(res => {
-    console.log(resuser);
                 for(let obj of resuser) {
                     if(obj.admin == true || obj.admin == false) {
                         const admin = obj.admin;
-                        console.log(admin);
+                       
                         for(let i of res) {
                             
                             if(admin == true) {
@@ -215,13 +210,10 @@ function sendScan() {
                     } 
                 }
 
-                
-    
-    
-                console.log(res);
     
                 const scanTitle = document.querySelector('.scan > h1');
                 const scanPicture = document.querySelector('.scan > img');
+                scanPicture.style.width = `80%`;
                 const scanMessage = document.querySelector('.scan > p');
     
                 const btnOverlayDeleteScan = document.querySelector('.scan__btnScanGestion--deleteScan');
@@ -283,19 +275,20 @@ function sendScan() {
           
     
                     const titleInput = document.querySelector('#titlePut').value;
-                    const pictureInput = document.querySelector('#picturePut').value;
+                   // const pictureInput = document.querySelector('#picturePut').value;
                     const messageInput = document.querySelector('#messagePut').value;
     
+
                     let putScan = {
                         title: titleInput,
-                        picture: pictureInput,
+                     //   picture: pictureInput,
                         message: messageInput
                     }
-    
-                    if( titleInput != '' || pictureInput != '' || messageInput != '') {
+                    // || pictureInput != ''
+                    if( titleInput != '' || messageInput != '') {
                         
                         fetch(`http://localhost:3000/api/putpost/${id}`, {
-                            method: 'PUT',
+                            method: 'PATCH',
                             body: JSON.stringify(putScan),
                             headers: {
                                 'accept': 'application/json',
@@ -338,7 +331,7 @@ function sendScan() {
                 })
                 .then(data => { return data.json()})
                 .then(res => {
-                    console.log(res);
+                    
                      
                     const pseudo_user = localStorage.getItem('pseudo');
     
