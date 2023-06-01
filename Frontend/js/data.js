@@ -181,6 +181,8 @@ function sendScan() {
         })
         .then(data => {return data.json()})
         .then(resuser => {
+
+            console.log(resuser);
            
             const id = localStorage.getItem('post_id');
         
@@ -195,19 +197,21 @@ function sendScan() {
             })
             .then(data => {return data.json()})
             .then(res => {
+           
                 for(let obj of resuser) {
-                    if(obj.admin == true || obj.admin == false) {
+                    console.log(obj.id);
+                   
                         const admin = obj.admin;
                        
                         for(let i of res) {
-                            
-                            if(admin == true) {
-                                document.querySelector('.scan__btnScanGestion').style.display = 'block';
-                            } else if( user_id != i.user_id || admin == false) {
-                                document.querySelector('.scan__btnScanGestion').style.display = 'none';
+           
+                            if(admin == true || obj.id == i.user_id ) {
+                                document.querySelector('.scan__btnScanGestionA').style.display = 'block';
+                            } else if( i.user_id != obj.user_id || admin == false) {
+                                document.querySelector('.scan__btnScanGestionA').style.display = 'none';
                             }
                         }         
-                    } 
+                     
                 }
 
     
@@ -216,12 +220,12 @@ function sendScan() {
                 scanPicture.style.width = `80%`;
                 const scanMessage = document.querySelector('.scan > p');
     
-                const btnOverlayDeleteScan = document.querySelector('.scan__btnScanGestion--deleteScan');
+                const btnOverlayDeleteScan = document.querySelector('.scan__btnScanGestionA--deleteScan');
                 const overlayDeleteScan = document.querySelector('.overlayDeleteScan');
                 const cancelOverlayDelete = document.querySelector('.cancelDeleteScan');
                 const btnDeleteScan = document.querySelector('.deleteScan');
     
-                const btnPutScan = document.querySelector('.scan__btnScanGestion--putScan');
+                const btnPutScan = document.querySelector('.scan__btnScanGestionA--putScan');
             
                 for(let i of res) {
                     scanTitle.textContent = `${i.title}`;
@@ -259,7 +263,7 @@ function sendScan() {
                 ///////////////////////GESTION REQUÊTE PUT SCAN //////////////////////
     
                 const cancelOverlayPutScan = document.querySelector('.putScanForm__cancelPutScanbtn');
-                const displayOverlayPutScan = document.querySelector('.scan__btnScanGestion--putScan');
+                const displayOverlayPutScan = document.querySelector('.scan__btnScanGestionA--putScan');
                 const putScanForm = document.querySelector('.putScanForm');
     
                 displayOverlayPutScan.addEventListener('click', () => {
@@ -366,9 +370,9 @@ function sendScan() {
                                                                         //         for(let i of res) {
                                                                                     
                                                                         //             if(admin == true) {
-                                                                        //                 document.querySelector('.scan__btnScanGestion').style.display = 'block';
+                                                                        //                 document.querySelector('.scan__btnScanGestionA').style.display = 'block';
                                                                         //             } else if( user_id != i.user_id || admin == false) {
-                                                                        //                 document.querySelector('.scan__btnScanGestion').style.display = 'none';
+                                                                        //                 document.querySelector('.scan__btnScanGestionA').style.display = 'none';
                                                                         //             }
                                                                         //         }         
                                                                         //     } 
