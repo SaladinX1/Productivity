@@ -32,8 +32,10 @@
     width: 60%;
     padding: 20px;
     border-radius: 20px;
-    &__btnScanGestion {
+    &__btnScanGestionA {
+       
         &--deleteScan {
+       
             background-color: #ee2b72;
             color: white;
             cursor: pointer;
@@ -44,6 +46,8 @@
             }
         }
         &--putScan {
+  
+
             background-color: #2bcaee;
             color: white;
             cursor: pointer;
@@ -80,7 +84,7 @@
 }
 
 .overlayDeleteScan {
-    display: none;
+   display: none;
         position: fixed;
         top: 30%;
         left: 25%;
@@ -128,7 +132,7 @@
 
 
 .overlayAddComment {
-    display: none;
+  display: none;
     position: absolute;
     top: 200px;
     left: 200px;
@@ -189,7 +193,7 @@
 
 
 .hidden{
-    display: none;
+   display: none;
 }
 
 #putCommentContent {
