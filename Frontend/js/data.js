@@ -359,38 +359,34 @@ function sendScan() {
                                                                             </div>
                                                                             </div> `;    
                                                                             
-                                                                            console.log(comment.pseudo_user);
+                                                                            console.log(comment);
                                                                         }
                                                                         
 
-                                                                        // for(let obj of resuser) {
-                                                                        //     if(obj.admin == true || obj.admin == false) {
-                                                                        //         const admin = obj.admin;
-                                                                        //         console.log(admin);
-                                                                        //         for(let i of res) {
-                                                                                    
-                                                                        //             if(admin == true) {
-                                                                        //                 document.querySelector('.scan__btnScanGestionA').style.display = 'block';
-                                                                        //             } else if( user_id != i.user_id || admin == false) {
-                                                                        //                 document.querySelector('.scan__btnScanGestionA').style.display = 'none';
-                                                                        //             }
-                                                                        //         }         
-                                                                        //     } 
-                                                                        // }
-                                                                       document.querySelectorAll('.userComm').forEach(commentElement => {
-                                                                        const userAuthorElement = commentElement.querySelector('.userAuthor');
-                                                                        const putCommentBtnElement = commentElement.querySelector('.putCommentBtn');
-                                                                        const cancelPutCommentBtnElement = commentElement.querySelector('.cancelCommentBtn');
+                                                                        for(let obj of resuser) {
+                                                                            console.log(obj.id);
+                                                                           console.log(resuser);
+                                                                                const admin = obj.admin;
+                                                                               console.log(res);
+                                                                                for(let i of res) {
+                                                                   
+                                                                                    if(admin == true || obj.pseudo == i.pseudo_user ) {
+                                                                                        document.querySelector('.userComm').style.display = 'block';
+                                                                                        const putCommentBtnElement = document.querySelector('.putCommentBtn');
+                                                                                        const cancelPutCommentBtnElement = document.querySelector('.cancelCommentBtn');
+                                                                                        putCommentBtnElement.style.backgroundColor = 'lightblue';
+                                                                                        cancelPutCommentBtnElement.style.backgroundColor = 'pink';
 
-                                                                        if (userAuthorElement.textContent === pseudo_user) {
-                                                                            putCommentBtnElement.style.display = 'block';
-                                                                            putCommentBtnElement.style.backgroundColor = 'lightblue';
-                                                                            cancelPutCommentBtnElement.style.backgroundColor = 'pink';
-                                                                        } else {
-                                                                            putCommentBtnElement.style.display = 'none';
-                                                                            cancelPutCommentBtnElement.style.display = 'none';
+                                                                                        if (admin) { 
+                                                                                             putCommentBtnElement.style.display = 'none';   
+                                                                                        }     
+                                                                                    } else if( i.pseudo_user != obj.pseudo || admin == false) {
+                                                                                        document.querySelector('.userComm').style.display = 'none';
+                                                                                    }
+                                                                                }         
+                                                                             
                                                                         }
-                                                                        });
+
 
                                                                 
                     document.querySelectorAll('.putCommentBtn').forEach(com => {
