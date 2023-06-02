@@ -381,14 +381,17 @@ function sendScan() {
                                                                                              putCommentBtnElement.style.display = 'none';   
                                                                                         }     
                                                                                     } else if( i.pseudo_user != obj.pseudo || admin == false) {
-                                                                                        document.querySelector('.userComm').style.display = 'none';
+                                                                                        document.querySelector('.userComm').style.display = 'block';
+                                                                                        const putCommentBtnElement = document.querySelector('.putCommentBtn');
+                                                                                        const cancelPutCommentBtnElement = document.querySelector('.cancelCommentBtn');
+                                                                                        putCommentBtnElement.style.display = 'none';
+                                                                                        cancelPutCommentBtnElement.style.display = 'none';
                                                                                     }
                                                                                 }         
                                                                              
                                                                         }
 
 
-                                                                
                     document.querySelectorAll('.putCommentBtn').forEach(com => {
                         com.addEventListener('click', (e) => {
                             if (!document.querySelector('.userComm__putComment').classList.contains('hidden')) {
