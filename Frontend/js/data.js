@@ -468,7 +468,7 @@ function sendScan() {
                               let post_id = localStorage.getItem('post_id');
                             console.log(idComment, post_id);
 
-                                if(confirm('Voulez-vous vraiment supprimer votre commentaire ?') == true) {
+                                if(confirm('Voulez-vous vraiment supprimer ce commentaire ?') == true) {
 
   
                                     fetch(`http://localhost:3000/api/post/${post_id}/commentdelete/${idComment}`, {
