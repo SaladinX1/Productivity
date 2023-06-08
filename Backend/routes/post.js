@@ -16,4 +16,14 @@ router.post('/addpost', auth, upload.single('picture'), postCtrl.addPost);
 router.patch('/putpost/:id',auth, postCtrl.putPost);
 router.delete('/deletepost/:id', auth, postCtrl.deletePost);
 
+
+//////////////////////////  ROUTE LIKE/UNLIKE //////////////////////////////
+
+router.post("/post/:id/likes", auth, postCtrl.countLikes);
+router.post("/post/:id/likeunlike", auth, postCtrl.likeUnlikePost);
+router.post("/post/:id/postLikedByUser", auth, postCtrl.postLikedByUser);
+
+
+
+
 module.exports = router;
