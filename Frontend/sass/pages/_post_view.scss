@@ -60,6 +60,9 @@
     }
 
     &__btnLikeUnlike {
+        display: flex;
+        justify-content: center;
+        margin: 15px;
         &--like {
             background-color: #2beeee;
             cursor: pointer;
@@ -70,16 +73,7 @@
                 transform: scale(1.1);
             }
         }
-        &--unlike {
-            background-color: #f1250a;
-            cursor: pointer;
-            transform: scale(1);
-            font-size: 1.2rem;
-            transition: all ease-in .250s;
-            &:hover {
-                transform: scale(1.1);
-            }
-        }
+       
     }
 }
 
@@ -99,6 +93,10 @@
     &:hover {
         opacity: 1;
     }
+}
+
+.liked {
+    background-color: #45ee2b;
 }
 
 
