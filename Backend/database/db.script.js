@@ -1,10 +1,10 @@
 const mysql = require('mysql2');
 
-
 const db = mysql.createConnection({
     host:'localhost',
-    user:'root',
-    password:'Razorback2.2'
+    // Remplacer l'username et le passsword par un utilisateur de votre SGBD.
+    user: 'root', 
+    password: 'Razorback2.2'
 });
 
  function initialize() {
@@ -57,8 +57,18 @@ const db = mysql.createConnection({
                         function( err , result) {
                         if (err) throw err;
                       //  console.log("Table Comment crée");
-})
+                      })
 
+                      db.query(`CREATE TABLE IF NOT EXISTS likes (
+  user_id INT NOT NULL,
+  FOREIGN KEY (user_id) REFERENCES Users(id) ON DELETE CASCADE,
+  post_id INT NOT NULL,
+  FOREIGN KEY (post_id) REFERENCES Post(id) ON DELETE CASCADE);`, 
+                          
+                     function( err , result) {
+                     if (err) throw err;
+                   //  console.log("Table Comment crée");
+                   })
 
              }); 
 
@@ -68,12 +78,6 @@ const db = mysql.createConnection({
             })
             
             }
-
-
-           
-
-
-
 
 
             initialize();
