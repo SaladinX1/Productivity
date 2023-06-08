@@ -197,7 +197,9 @@ function sendScan() {
             })
             .then(data => {return data.json()})
             .then(res => {
-           
+
+
+               
                 for(let obj of resuser) {
                     console.log(obj.id);
                    
@@ -229,9 +231,86 @@ function sendScan() {
             
                 for(let i of res) {
                     scanTitle.textContent = `${i.title}`;
+                    
                     scanPicture.src = `${i.picture}`;
                     scanMessage.textContent = `${i.message}`;
+                    scanMessage.style.fontSize = '2.2rem';
+                    scanMessage.style.fontWeight = '600';
+                    scanMessage.style.margin = '5px';
+
                 }
+
+                //////////////////////// GESTION LIKE UNLIKE POST ////////////////////
+
+                const likeBtn = document.querySelector('.scan__btnLikeUnlike--like');
+              //  const unlikeBtn = document.querySelector('.scan__btnLikeUnlike--unlike');
+
+                ///////////////// LIKE /////////////////////
+
+              
+
+                likeBtn.addEventListener('click', () => {
+
+
+                   
+   
+                     ///// / ////////// RECUPERATION NOMBRE DE LIKE 
+                     let post_id = localStorage.getItem('post_id');
+                     let postId = {
+                        postId: post_id
+                     }
+
+                    fetch(`http://localhost:3000/api/post/${id}/likes`, {
+                        method: 'POST',
+                        body: JSON.stringify(postId),
+                        headers: {
+                            'accept' : 'application/json',
+                            'content-type' : 'application/json',
+                            'authorization' : `Bearer ${token}`
+                        }
+                    }).then(data => {return data.json()})
+                    .then( res => {
+
+                        if (res[0].total == 0) {
+                            likeBtn.classList.remove('liked');
+                        } else if (!likeBtn.classList.contains('liked') || likeBtn.classList.contains('liked') ) {
+                        likeBtn.classList.toggle('liked');
+                    }
+
+                        document.querySelector('.count_like').textContent = `${res[0].total} Like(s)`;
+
+
+                        console.log(res[0].total);
+
+
+                    })
+
+
+                    let postLikeUnlike = {
+                        userId: user_id,
+                        postId: id,
+                    }
+
+                    fetch(`http://localhost:3000/api/post/${id}/likeunlike`, {
+                        method: 'POST',
+                        body: JSON.stringify(postLikeUnlike),
+                        headers: {
+                            'accept' : 'application/json',
+                            'content-type' : 'application/json',
+                            'authorization' : `Bearer ${token}`
+                        }
+                    }).then(data => {return data.json()})
+                    .then( res => {
+
+                        
+                        console.log(res);
+                    })
+
+
+
+
+                });
+
     
                 ///////////////////// GESTION DELETE SCAN REQUEST //////////////////
                 btnOverlayDeleteScan.addEventListener('click', () => {
@@ -242,7 +321,6 @@ function sendScan() {
                 })
                 btnDeleteScan.addEventListener('click', () => {
     
-                   // const token = localStorage.getItem('token');
     
                     fetch(`http://localhost:3000/api/deletepost/${id}`, {
                         method: 'DELETE',
@@ -337,9 +415,7 @@ function sendScan() {
                 .then(res => {
                     
                      
-                    const pseudo_user = localStorage.getItem('pseudo');
     
-                    // <div class='putCommentBtnGestion'>  </div>
                     for(let comment of res) {
                         document.querySelector('.comments').innerHTML += `<div class='userComm' data-id='${comment.id}'>
                                                                             <span class='userAuthor'>${comment.pseudo_user}</span>:  ${comment.message}
