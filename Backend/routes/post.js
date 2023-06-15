@@ -20,7 +20,7 @@ router.delete('/deletepost/:id', auth, postCtrl.deletePost);
 //////////////////////////  ROUTE LIKE/UNLIKE //////////////////////////////
 
 router.post("/post/:id/likes", auth, postCtrl.countLikes);
-router.post("/post/:id/likeunlike", auth, postCtrl.likeUnlikePost);
+router.patch("/post/:id/likeunlike", auth, postCtrl.likeUnlikePost);
 router.post("/post/:id/postLikedByUser", auth, postCtrl.postLikedByUser);
 
 
