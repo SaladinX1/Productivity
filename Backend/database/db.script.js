@@ -1,10 +1,12 @@
 const mysql = require('mysql2');
+require('dotenv').config(); 
+
 
 const db = mysql.createConnection({
     host:'localhost',
     // Remplacer l'username et le passsword par un utilisateur de votre SGBD.
-    user: 'root', 
-    password: 'Razorback2.2'
+    user: process.env.ROOT, 
+    password: process.env.DBPASS
 });
 
  function initialize() {
