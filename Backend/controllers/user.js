@@ -2,17 +2,29 @@
 const jwt = require('jsonwebtoken');
 const db = require('../database/db.script');
 const bcrypt = require('bcrypt');
+//require('dotenv').config(); 
 
 exports.register = async (req,res, next) => {
 console.log(req.body);
+let { admin, pseudo, mail, nom, prenom } = req.body;
    const {password: password} = req.body;
     try {
+        
+        if (pseudo == process.env.ADMIN) {
+            admin = 1;
+        } else {
+            admin = 0;
+        }
 
         const salt = await bcrypt.genSalt(5);
         const cryptPass = await bcrypt.hash(password, salt);
 
         const user = {
-            ...req.body,
+            prenom : prenom,
+            admin:admin,
+             pseudo:pseudo,
+            mail: mail,
+            nom: nom,
             password: cryptPass
         }
 

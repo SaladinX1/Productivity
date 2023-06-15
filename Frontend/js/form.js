@@ -377,9 +377,9 @@ let lockMsg;
 
 if ( validationForm.nomValid == true && validationForm.prenomValid == true && validationForm.mailValid == true && validationForm.pseudoValid == true && validationForm.passwordValid == true) {
     
-        let admin;
+        let admin = 0;
         let pseudo = document.querySelector('#pseudo').value;
-          document.querySelector('#pseudo').value = 'AdminRH' ? admin = 1 : admin = 0;
+      
         
     const registerClient = {
        
