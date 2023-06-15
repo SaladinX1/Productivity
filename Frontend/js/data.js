@@ -76,7 +76,7 @@ function deleteAccount() {
     .then(res => { return res.json()})
     .then(data => {
 
-
+      
         for(let info of data) {
          
             blog.innerHTML += `
@@ -182,9 +182,12 @@ function sendScan() {
         .then(data => {return data.json()})
         .then(resuser => {
 
+            const id = localStorage.getItem('post_id');
+
+           
             console.log(resuser);
            
-            const id = localStorage.getItem('post_id');
+           
         
             //////////////// GESTION RECUPERATION ID DATA /////////////////
             fetch(`http://localhost:3000/api/post/${id}`, {
@@ -251,8 +254,26 @@ function sendScan() {
 
                 likeBtn.addEventListener('click', () => {
 
-
-                   
+                        ////////// POSTLIKEUSER /////////
+                    let postLiked = {
+                        userId: user_id,
+                        postId: id
+                    }
+        
+                      fetch(`http://localhost:3000/api/post/${id}/postLikedByUser`, {
+                    method: 'POST',
+                    body: JSON.stringify(postLiked),
+                    headers: {
+                        'accept' : 'application/json',
+                        'content-type' : 'application/json',
+                        'authorization' : `Bearer ${token}`
+                    }
+                }).then(data => {return data.json()})
+                .then(res => {
+                    console.log(res);
+        
+                })
+        
    
                      ///// / ////////// RECUPERATION NOMBRE DE LIKE 
                      let post_id = localStorage.getItem('post_id');
@@ -273,11 +294,11 @@ function sendScan() {
 
                         if (res[0].total == 0) {
                             likeBtn.classList.remove('liked');
-                        } else if (!likeBtn.classList.contains('liked') || likeBtn.classList.contains('liked') ) {
-                        likeBtn.classList.toggle('liked');
-                    }
+                        }  
 
-                        document.querySelector('.count_like').textContent = `${res[0].total} Like(s)`;
+                        document.querySelector('.count_like').style.margin = '8px';
+                        document.querySelector('.count_like').style.color = 'red';
+                        document.querySelector('.count_like').textContent = `${res[0].total} `;
 
 
                         console.log(res[0].total);
@@ -292,7 +313,7 @@ function sendScan() {
                     }
 
                     fetch(`http://localhost:3000/api/post/${id}/likeunlike`, {
-                        method: 'POST',
+                        method: 'PATCH',
                         body: JSON.stringify(postLikeUnlike),
                         headers: {
                             'accept' : 'application/json',
