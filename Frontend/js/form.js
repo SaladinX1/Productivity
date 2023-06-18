@@ -154,17 +154,11 @@ document.querySelector('#info_user--put').addEventListener('submit', (e) => {
     e.preventDefault();
     // Ajouter le code de traitement du formulaire ici
 
-    // const nomPut = document.querySelector('#nomPut');
-    // const prenomPut = document.querySelector('#prenomPut');
-    // const passwordPut = document.querySelector('#passwordPut');
-    // const pseudoPut = document.querySelector('#pseudoPut');
-
     let lockMsg;
 
-if ( validationForm.nomValid == true && validationForm.prenomValid == true &&  validationForm.pseudoValid == true && validationForm.passwordValid == true) {
+if ( validationForm.nomValid == true || validationForm.prenomValid == true ||  validationForm.pseudoValid == true || validationForm.passwordValid == true) {
     
-    let admin;
-        document.querySelector('#pseudoPut').value === 'AdminRH' ? admin = 1 : admin = 0;
+    let admin = 0;
 
     const putUser = {
        nom : nomPut.value,
@@ -187,7 +181,8 @@ if ( validationForm.nomValid == true && validationForm.prenomValid == true &&  v
            .then(data => {
             console.log(data);
             alert('Informations modifiés !')
-
+           // localStorage.removeItem('token');
+           // localStorage.setItem('token',data.token);
             localStorage.removeItem('pseudo');
           
                 localStorage.setItem('pseudo', data.pseudoUpd);

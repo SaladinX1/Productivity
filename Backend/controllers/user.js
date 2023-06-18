@@ -2,7 +2,7 @@
 const jwt = require('jsonwebtoken');
 const db = require('../database/db.script');
 const bcrypt = require('bcrypt');
-//require('dotenv').config(); 
+
 
 exports.register = async (req,res, next) => {
 console.log(req.body);
@@ -43,7 +43,9 @@ let { admin, pseudo, mail, nom, prenom } = req.body;
     }
 }
 
-
+// function generateRefreshToken() {
+//   jwt.sign()
+// }
 
 exports.login = (req, res, next) =>  {
 
@@ -66,6 +68,7 @@ try {
                 } else {
                     const id = user.id;
                     const pseudo = user.pseudo;
+                  //  req.session.isAuthenticated = true;
                     res.status(200).json({
                         id: id,
                         pseudo: pseudo,
@@ -122,14 +125,19 @@ exports.deleteUser = (req,res) => {
 
 }
 
+
 exports.putUser = async (req, res, next) => {
 
     const id = req.params.id;
-    const pseudo = req.body.pseudo;
-    const nom = req.body.nom;
-    const prenom = req.body.prenom;
-    const password = req.body.password;
-    const admin = req.body.admin;
+    const {pseudo, nom, prenom, password} = req.body;
+   
+    let admin = req.body.admin;
+
+    if (pseudo == process.env.ADMIN) {
+        admin = 1;
+    } else {
+        admin = 0;
+    }
 
     const salt = await bcrypt.genSalt(5);
         const cryptPass = await bcrypt.hash(password, salt);
@@ -140,20 +148,19 @@ exports.putUser = async (req, res, next) => {
             console.log(pseudo);
           console.log(err);
           res.status(400).json({message: 'Mauvaise requête !'});
+
         } else {
-          // Met à jour la ligne de la table `users`
-          const putData = `UPDATE Users SET nom=?, prenom=?, pseudo=?, password=?, admin=? WHERE id = ?;`;
-         
-          db.query(putData, [prenom, nom, pseudo, cryptPass,admin, id], (err, result) => {
-            if (err) {
-          
-              res.status(400).json({message: 'Mauvaise requête !'});
-            } else {
-              res.status(200).json({message: 'Vos données ont été modifiées', pseudoUpd: pseudo});
-            }
-          });
-        }
+            // Met à jour la ligne de la table `users`
+            const putData = `UPDATE Users SET nom=?, prenom=?, pseudo=?, password=?, admin=? WHERE id = ?;`;
+           
+            db.query(putData, [prenom, nom, pseudo, cryptPass,admin, id], (err, result) => {
+              if (err) {
+            
+                res.status(400).json({message: 'Mauvaise requête !'});
+              } else {
+                res.status(200).json({message: 'Vos données ont été modifiées', pseudoUpd: pseudo});
+              }
+            });
+          }
       });
-
 }
-
