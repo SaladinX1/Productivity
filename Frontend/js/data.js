@@ -230,12 +230,15 @@ function sendScan() {
                 const cancelOverlayDelete = document.querySelector('.cancelDeleteScan');
                 const btnDeleteScan = document.querySelector('.deleteScan');
     
-                const btnPutScan = document.querySelector('.scan__btnScanGestionA--putScan');
+              //  const btnPutScan = document.querySelector('.scan__btnScanGestionA--putScan');
             
                 for(let i of res) {
                     scanTitle.textContent = `${i.title}`;
                     
                     scanPicture.src = `${i.picture}`;
+                    scanPicture.style.height = '400px';
+                    scanPicture.style.objectFit = 'cover';
+
                     scanMessage.textContent = `${i.message}`;
                     scanMessage.style.fontSize = '2.2rem';
                     scanMessage.style.fontWeight = '600';
@@ -243,10 +246,10 @@ function sendScan() {
 
                 }
 
-                //////////////////////// GESTION LIKE UNLIKE POST ////////////////////
+                //////////////////////// GESTION LIKE  POST ////////////////////
 
                 const likeBtn = document.querySelector('.scan__btnLikeUnlike--like');
-              //  const unlikeBtn = document.querySelector('.scan__btnLikeUnlike--unlike');
+              
 
                 ///////////////// LIKE /////////////////////
 
@@ -378,13 +381,11 @@ function sendScan() {
           
     
                     const titleInput = document.querySelector('#titlePut').value;
-                   // const pictureInput = document.querySelector('#picturePut').value;
                     const messageInput = document.querySelector('#messagePut').value;
     
 
                     let putScan = {
                         title: titleInput,
-                     //   picture: pictureInput,
                         message: messageInput
                     }
                     // || pictureInput != ''
@@ -506,9 +507,9 @@ function sendScan() {
     
                     document.querySelectorAll('.overlayAddComment__cancelCommentbtn').forEach(cancel => {
                         cancel.addEventListener('click', (e) => {
-                            document.querySelectorAll('#putCommentContent').forEach(content => {
-                                content.value = '';
-                            });
+                           document.querySelectorAll('#putCommentContent').forEach(content => {
+                               content.value = '';
+                           });
                             const userCommPutComment = e.target.parentElement;
                             userCommPutComment.classList.toggle('hidden');
                         });
@@ -563,7 +564,7 @@ function sendScan() {
                                  e.preventDefault();
                               let idComment = e.target.parentElement.getAttribute('data-id');
                               let post_id = localStorage.getItem('post_id');
-                            console.log(idComment, post_id);
+                           
 
                                 if(confirm('Voulez-vous vraiment supprimer ce commentaire ?') == true) {
 
@@ -614,9 +615,25 @@ function sendScan() {
             btnCancelOverlayComment.addEventListener('click', () => {
                 overlayComment.style.display = 'none';
             })
+
+           
             
             formComment.addEventListener('submit', (e) => {
             e.preventDefault();
+
+
+            // if (e.target.classList.contains('overlayAddComment__commentForm')) {
+            //     let putComment = e.target.querySelector('#putCommentContent').value;
+            //     let idComment = e.target.parentElement.parentElement.getAttribute('data-id');
+            //     let post_id = localStorage.getItem('post_id');
+            //     if (putComment === '') {
+            //       document.querySelector('.errPutComment').textContent = 'Veuillez écrire quelque chose ..., merci.';
+            //       document.querySelector('.errPutComment').style.color = 'red';
+            //       document.querySelector('.errPutComment').style.fontSize = '1.5rem';
+            //       setTimeout(() => {
+            //         document.querySelector('.errPutComment').textContent = ''
+            //       }, 1800)
+            //     }}
     
                 let sendMessage = document.querySelector('#commentToAdd').value;
                 let pseudo = localStorage.getItem('pseudo');
