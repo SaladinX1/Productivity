@@ -185,7 +185,7 @@ function sendScan() {
             const id = localStorage.getItem('post_id');
 
            
-            console.log(resuser);
+          
            
            
         
@@ -436,7 +436,6 @@ function sendScan() {
                 .then(data => { return data.json()})
                 .then(res => {
                     
-                     
     
                     for(let comment of res) {
                         document.querySelector('.comments').innerHTML += `<div class='userComm' data-id='${comment.id}'>
@@ -452,42 +451,88 @@ function sendScan() {
                                                                             <textarea name="putCommentContent" id="putCommentContent" cols="5 " rows="3"></textarea>
                                                                             <button type="submit" class="sendPutCommentBtn" >Envoyer</button>
                                                                             </form>
-                                                                            <button type="button" class="overlayAddComment__cancelCommentbtn">Annuler</button>
                                                                             <p class='errPutComment'></p> 
                                                                             </div>
                                                                             </div> `;    
                                                                             
-                                                                            console.log(comment);
                                                                         }
                                                                         
 
                                                                         for(let obj of resuser) {
-                                                                            console.log(obj.id);
-                                                                           console.log(resuser);
-                                                                                const admin = obj.admin;
-                                                                               console.log(res);
-                                                                                for(let i of res) {
-                                                                   
-                                                                                    if(admin == true || obj.pseudo == i.pseudo_user ) {
-                                                                                        document.querySelector('.userComm').style.display = 'block';
-                                                                                        const putCommentBtnElement = document.querySelector('.putCommentBtn');
-                                                                                        const cancelPutCommentBtnElement = document.querySelector('.cancelCommentBtn');
-                                                                                        putCommentBtnElement.style.backgroundColor = 'lightblue';
-                                                                                        cancelPutCommentBtnElement.style.backgroundColor = 'pink';
 
-                                                                                        if (admin) { 
-                                                                                             putCommentBtnElement.style.display = 'none';   
-                                                                                        }     
-                                                                                    } else if( i.pseudo_user != obj.pseudo || admin == false) {
-                                                                                        document.querySelector('.userComm').style.display = 'block';
-                                                                                        const putCommentBtnElement = document.querySelector('.putCommentBtn');
-                                                                                        const cancelPutCommentBtnElement = document.querySelector('.cancelCommentBtn');
-                                                                                        putCommentBtnElement.style.display = 'none';
-                                                                                        cancelPutCommentBtnElement.style.display = 'none';
-                                                                                    }
-                                                                                }         
-                                                                             
-                                                                        }
+                                                                                const admin = obj.admin;
+
+                                                                                const userCommSections =  document.querySelectorAll('.userComm');
+                                                                                const putCommentBtnsElement = document.querySelectorAll('.putCommentBtn');
+                                                                              const cancelPutCommentBtnsElement = document.querySelectorAll('.cancelCommentBtn');
+                                                                              
+                                                                              putCommentBtnsElement.forEach(putBtn => {
+                                                                                putBtn.style.backgroundColor = 'lightblue';
+                                                                              })
+                                                                              cancelPutCommentBtnsElement.forEach(cancelBtn => {
+                                                                                cancelBtn.style.backgroundColor = 'pink';
+                                                                              })
+
+                                                                            userCommSections.forEach(section => {
+                                                                              //  console.log(section);
+                                                                                for (let i of res ) {
+
+                                                                                    if(admin == true  ) {
+                                                                                        
+                                                                   console.log(i.pseudo_user);
+                                                                                        document.querySelectorAll('.userComm').forEach(userComSection => {
+                                                                                            userComSection.style.display = 'block';
+                                                                                        }) 
+    
+                                                                                    // putCommentBtnElement.style.backgroundColor = 'lightblue';
+                                                                                    // cancelPutCommentBtnElement.style.backgroundColor = 'pink';
+                      
+                                                                                        
+                                                                                        // document.querySelectorAll('.putCommentBtn').forEach( btn => {  
+                                                                                        //     if( i.pseudo_user != obj.pseudo && admin == true) {
+                                                                                        //         document.querySelector('.userComm').style.display = 'block';
+                                                                                        //         const putCommentBtnElement = document.querySelector('.putCommentBtn');
+                                                                                        //         putCommentBtnElement.style.display = 'none';   
+                                                                                        //     }
+                                                                                            // for(let i of res) {
+                                                                                                //    console.log(i.pseudo_user !== obj.pseudo );
+                                                                                                //     if (i.pseudo_user !== obj.pseudo) { 
+                                                                                                //         console.log('fffff');
+                                                                                                //         btn.style.display = 'none';   
+                                                                                                //     }
+                                                                                                //     //  else if (i.pseudo_user == obj.pseudo) {
+                                                                                                //     //     btn.style.display = 'block';    
+                                                                                                //     // }   
+                                                                                                // }
+                                                                                        //})
+                                                                                    
+                                                                                         } else if(  admin == false  ) {
+                                                                                            
+
+                                                                                            putCommentBtnsElement.forEach(putBtn => {
+                                                                                                if (i.pseudo_user != obj.pseudo) {
+                                                                                                    putBtn.style.display = 'none';
+                                                                                                } else {
+                                                                                                    putBtn.style.display = 'block';
+                                                                                                }        
+                                                                                              })
+
+
+                                                                                              cancelPutCommentBtnsElement.forEach(cancelBtn => {
+                                                                                                if (i.pseudo_user != obj.pseudo) {  
+                                                                                                    cancelBtn.style.display = 'none';
+                                                                                                } else {
+                                                                                                    cancelBtn.style.display = 'block';
+                                                                                                }      
+                                                                                              })
+         
+                                                                                }
+
+                                                                              }
+
+                                                                            })
+                                                                         }
+                                                                                    
 
 
                     document.querySelectorAll('.putCommentBtn').forEach(com => {
@@ -507,18 +552,25 @@ function sendScan() {
     
                     document.querySelectorAll('.overlayAddComment__cancelCommentbtn').forEach(cancel => {
                         cancel.addEventListener('click', (e) => {
-                           document.querySelectorAll('#putCommentContent').forEach(content => {
-                               content.value = '';
-                           });
+                           // document.querySelector('#commentToAdd').textContent = '';
+                          // const userCommPutComment = target.parentElement.querySelector('.userComm__putComment');
+                          document.querySelectorAll('#putCommentContent').forEach(content => {
+                              content.value = '';
+                            });
                             const userCommPutComment = e.target.parentElement;
                             userCommPutComment.classList.toggle('hidden');
+                            if (userCommPutComment.classList.contains('hidden')) {
+                                userCommPutComment.classList.toggle('hidden');
+                            }
                         });
                       });
     
     
                       ///////////////////////////////// REQUEST PUT COMMENT  ///////////////////////////////
     
-                      document.querySelector('.comments').addEventListener('submit', (e) => {
+                      document.querySelectorAll('.comments').forEach(comment => {
+
+                        comment.addEventListener('submit', (e) => {
                             e.preventDefault();
             
                             if (e.target.classList.contains('userComm__putCommen--putCommentForm')) {
@@ -526,12 +578,19 @@ function sendScan() {
                                 let idComment = e.target.parentElement.parentElement.getAttribute('data-id');
                                 let post_id = localStorage.getItem('post_id');
                                 if (putComment === '') {
-                                  document.querySelector('.errPutComment').textContent = 'Veuillez écrire quelque chose ..., merci.';
-                                  document.querySelector('.errPutComment').style.color = 'red';
-                                  document.querySelector('.errPutComment').style.fontSize = '1.5rem';
-                                  setTimeout(() => {
-                                    document.querySelector('.errPutComment').textContent = ''
-                                  }, 1800)
+                                    
+                                   document.querySelectorAll('.errPutComment').forEach(errPut => {
+
+                                    errPut.textContent = 'Veuillez écrire quelque chose ..., merci.';
+                                    errPut.style.color = 'red';
+                                    errPut.style.fontSize = '1.5rem';
+
+                                     setTimeout(() => {
+                                        errPut.textContent = ''
+                                     }, 1800)
+
+                                   })
+
                                 } else {
                                   let putComObj = {
                                     comment: putComment
@@ -556,6 +615,10 @@ function sendScan() {
 
                               
                             })
+
+                      }) 
+
+
 
                             //////////////////////////////  REQUEST DELETE COMMENT ///////////////////////////////////
 
@@ -642,22 +705,33 @@ function sendScan() {
                     pseudo: pseudo,
                     message: sendMessage,
                 };
+
+                if (sendMessage == '') {
+                    document.querySelector('.errAddComment').textContent = 'Veuillez écrire quelque chode merci...';
+                    document.querySelector('.errAddComment').style.color = 'red'
+                    document.querySelector('.errAddComment').style.fontSize = '1.5rem'
+                    setTimeout(() => {
+                        document.querySelector('.errAddComment').textContent = '';
+                    }, 2000)
+                } else {
+
+                    fetch(`http://localhost:3000/api/post/${id}/comment`, {
+                        method: 'POST',
+                        body: JSON.stringify(sendMsg),
+                        headers: {
+                            'accept': 'application/json',
+                            'content-type': 'application/json',
+                            'authorization': `Bearer ${token}`
+                        }
+                    })
+                    .then(data => { return data.json()})
+                    .then(res => {
+                        console.log(res);
+                        alert('Merci de ton partages !');
+                        location.reload();
+                    })
+                }
     
-                fetch(`http://localhost:3000/api/post/${id}/comment`, {
-                    method: 'POST',
-                    body: JSON.stringify(sendMsg),
-                    headers: {
-                        'accept': 'application/json',
-                        'content-type': 'application/json',
-                        'authorization': `Bearer ${token}`
-                    }
-                })
-                .then(data => { return data.json()})
-                .then(res => {
-                    console.log(res);
-                    alert('Merci de ton partages !');
-                    location.reload();
-                })
     
             });
         }
