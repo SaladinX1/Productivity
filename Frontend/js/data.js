@@ -204,7 +204,7 @@ function sendScan() {
 
                
                 for(let obj of resuser) {
-                    console.log(obj.id);
+                    console.log(obj);
                    
                         const admin = obj.admin;
                        
@@ -457,81 +457,52 @@ function sendScan() {
                                                                             
                                                                         }
                                                                         
-
-                                                                        for(let obj of resuser) {
-
-                                                                                const admin = obj.admin;
-
-                                                                                const userCommSections =  document.querySelectorAll('.userComm');
-                                                                                const putCommentBtnsElement = document.querySelectorAll('.putCommentBtn');
-                                                                              const cancelPutCommentBtnsElement = document.querySelectorAll('.cancelCommentBtn');
+                                                                       
+                                                                        const putCommentBtnsElement = document.querySelectorAll('.putCommentBtn');
+                                                                        const cancelPutCommentBtnsElement = document.querySelectorAll('.cancelCommentBtn');
                                                                               
                                                                               putCommentBtnsElement.forEach(putBtn => {
                                                                                 putBtn.style.backgroundColor = 'lightblue';
-                                                                              })
-                                                                              cancelPutCommentBtnsElement.forEach(cancelBtn => {
+                                                                            })
+                                                                            cancelPutCommentBtnsElement.forEach(cancelBtn => {
                                                                                 cancelBtn.style.backgroundColor = 'pink';
-                                                                              })
+                                                                            })
+                                                                            
+                                                                            const userCommSections = document.querySelectorAll('.userComm');
+                                                            
+                                                                                    if(resuser[0].admin == true  ) {
 
-                                                                            userCommSections.forEach(section => {
-                                                                              //  console.log(section);
-                                                                                for (let i of res ) {
-
-                                                                                    if(admin == true  ) {
-                                                                                        
-                                                                   console.log(i.pseudo_user);
-                                                                                        document.querySelectorAll('.userComm').forEach(userComSection => {
-                                                                                            userComSection.style.display = 'block';
+                                     
+                                                                                        userCommSections.forEach(comSection => {
+                                                                                            comSection.style.display = 'block';
+                                                                                            if(comSection.querySelector('.userAuthor').textContent != resuser[0].pseudo) {
+                                                                                                comSection.querySelector('.putCommentBtn').style.display = 'none';
+                                                                                            }
                                                                                         }) 
     
-                                                                                    // putCommentBtnElement.style.backgroundColor = 'lightblue';
-                                                                                    // cancelPutCommentBtnElement.style.backgroundColor = 'pink';
-                      
-                                                                                        
-                                                                                        // document.querySelectorAll('.putCommentBtn').forEach( btn => {  
-                                                                                        //     if( i.pseudo_user != obj.pseudo && admin == true) {
-                                                                                        //         document.querySelector('.userComm').style.display = 'block';
-                                                                                        //         const putCommentBtnElement = document.querySelector('.putCommentBtn');
-                                                                                        //         putCommentBtnElement.style.display = 'none';   
-                                                                                        //     }
-                                                                                            // for(let i of res) {
-                                                                                                //    console.log(i.pseudo_user !== obj.pseudo );
-                                                                                                //     if (i.pseudo_user !== obj.pseudo) { 
-                                                                                                //         console.log('fffff');
-                                                                                                //         btn.style.display = 'none';   
-                                                                                                //     }
-                                                                                                //     //  else if (i.pseudo_user == obj.pseudo) {
-                                                                                                //     //     btn.style.display = 'block';    
-                                                                                                //     // }   
-                                                                                                // }
-                                                                                        //})
                                                                                     
-                                                                                         } else if(  admin == false  ) {
+                                                                                         } else if( resuser[0].admin == false ) {
                                                                                             
-
-                                                                                            putCommentBtnsElement.forEach(putBtn => {
-                                                                                                if (i.pseudo_user != obj.pseudo) {
-                                                                                                    putBtn.style.display = 'none';
+                                                                                           
+                                                                                            userCommSections.forEach(comSection => {
+                                                                                                comSection.style.display = 'block';
+                                                                                                if (comSection.querySelector('.userAuthor').textContent != resuser[0].pseudo) {
+                                                                                                    comSection.querySelector('.putCommentBtn').style.display = 'none';
+                                                                                                    comSection.querySelector('.cancelCommentBtn').style.display = 'none';
+                                                                                                 
                                                                                                 } else {
-                                                                                                    putBtn.style.display = 'block';
-                                                                                                }        
-                                                                                              })
-
-
-                                                                                              cancelPutCommentBtnsElement.forEach(cancelBtn => {
-                                                                                                if (i.pseudo_user != obj.pseudo) {  
-                                                                                                    cancelBtn.style.display = 'none';
-                                                                                                } else {
-                                                                                                    cancelBtn.style.display = 'block';
-                                                                                                }      
-                                                                                              })
+                                                                                                    comSection.querySelector('.putCommentBtn').style.display = 'block';
+                                                                                                    comSection.querySelector('.cancelCommentBtn').style.display = 'block';
+                                                                                                }         
+                                                                                            }) 
+                                                                                               
+                                                                                          
          
                                                                                 }
 
-                                                                              }
 
-                                                                            })
-                                                                         }
+                                                                            
+                                                                           
                                                                                     
 
 
