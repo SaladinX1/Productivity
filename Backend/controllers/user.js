@@ -128,7 +128,7 @@ exports.deleteUser = (req,res) => {
 
 exports.putUser = async (req, res, next) => {
     const id = req.params.id;
-    const { pseudo, nom, prenom, password } = req.body;
+    const { pseudo, nom, prenom,  } = req.body;
     let admin = 0;
 
     if (pseudo === process.env.ADMIN) {
@@ -136,8 +136,6 @@ exports.putUser = async (req, res, next) => {
     }
 
     try {
-        const salt = await bcrypt.genSalt(5);
-        const cryptPass = await bcrypt.hash(password, salt);
 
         db.query('DELETE FROM comment WHERE pseudo_user = ?', [pseudo], (err, result) => {
             if (err) {
@@ -147,8 +145,7 @@ exports.putUser = async (req, res, next) => {
 
             const updateQuery = `
                 UPDATE Users 
-                SET password = ?, 
-                nom = ?, 
+                SET nom = ?, 
                 prenom = ?, 
                 pseudo = ?, 
                 admin = ?
@@ -167,7 +164,6 @@ exports.putUser = async (req, res, next) => {
                
                 
             const updateValues = [
-                cryptPass || user.password,
                 nom || user.nom,
                 prenom || user.prenom,
                 pseudo || user.pseudo,
