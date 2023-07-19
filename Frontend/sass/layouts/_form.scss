@@ -99,12 +99,12 @@
 
 #info_user--put {
     display: none;
-    position: absolute;
+   // position: absolute;
     // transform: translate(100%, 10%);
        opacity: 0.5;
        
-       position: absolute;
-       top: 20%;
+       position: fixed;
+       //top: 20%;
        left: 38%;
        flex-direction: column;
        justify-content:space-evenly;
@@ -156,6 +156,7 @@
            opacity: 0.8;
        }
        & input {
+       // display: none;
         text-align: center;
         padding: 15px;
         margin: 5px auto;
