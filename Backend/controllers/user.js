@@ -127,40 +127,74 @@ exports.deleteUser = (req,res) => {
 
 
 exports.putUser = async (req, res, next) => {
-
     const id = req.params.id;
-    const {pseudo, nom, prenom, password} = req.body;
-   
-    let admin = req.body.admin;
+    const { pseudo, nom, prenom, password } = req.body;
+    let admin = 0;
 
-    if (pseudo == process.env.ADMIN) {
+    if (pseudo === process.env.ADMIN) {
         admin = 1;
-    } else {
-        admin = 0;
     }
 
-    const salt = await bcrypt.genSalt(5);
+    try {
+        const salt = await bcrypt.genSalt(5);
         const cryptPass = await bcrypt.hash(password, salt);
 
-        
-    db.query('DELETE FROM comment WHERE pseudo_user = ?', [pseudo], (err, result) => {
-        if (err) {
-            console.log(pseudo);
-          console.log(err);
-          res.status(400).json({message: 'Mauvaise requête !'});
+        db.query('DELETE FROM comment WHERE pseudo_user = ?', [pseudo], (err, result) => {
+            if (err) {
+                console.log(err);
+                return res.status(400).json({ message: 'Mauvaise requête !' });
+            }
 
-        } else {
-            // Met à jour la ligne de la table `users`
-            const putData = `UPDATE Users SET nom=?, prenom=?, pseudo=?, password=?, admin=? WHERE id = ?;`;
+            const updateQuery = `
+                UPDATE Users 
+                SET password = ?, 
+                nom = ?, 
+                prenom = ?, 
+                pseudo = ?, 
+                admin = ?
+                WHERE id = ?
+            `;
+
+            const getUserQuery = 'SELECT * FROM Users WHERE id = ?';
+            const getUserValues = [req.params.id];
+
+            db.query(getUserQuery, getUserValues, (getUserError, getUserResults) => {
+                if (getUserError || getUserResults.length === 0) {
+                    return res.status(404).json({ message: 'Utilisateur non trouvé !' });
+                }
+
+                const user = getUserResults[0];
+               
+                
+            const updateValues = [
+                cryptPass || user.password,
+                nom || user.nom,
+                prenom || user.prenom,
+                pseudo || user.pseudo,
+                admin,
+                id   
+            ];
+
+            db.query(updateQuery, updateValues, (error, updateResult) => {
+                if (error) {
+                    return res.status(400).json({ message: 'Mauvaise requête !' });
+                }
+
            
-            db.query(putData, [prenom, nom, pseudo, cryptPass,admin, id], (err, result) => {
-              if (err) {
-            
-                res.status(400).json({message: 'Mauvaise requête !'});
-              } else {
-                res.status(200).json({message: 'Vos données ont été modifiées', pseudoUpd: pseudo});
-              }
             });
-          }
-      });
-}
+
+            return res.status(200).json({
+                message: 'Bravo ! Vos données ont été modifiées !',
+                token: jwt.sign({ id: user.id }, process.env.TOKEN, { expiresIn: '24h' }),
+                id: user.id,
+                pseudoUpd: pseudo, // Assuming you want to send the updated pseudo back
+            });
+
+            });
+
+        });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: 'Erreur interne du serveur' });
+    }
+};

@@ -158,40 +158,36 @@ document.querySelector('#info_user--put').addEventListener('submit', (e) => {
 
 if ( validationForm.nomValid == true || validationForm.prenomValid == true ||  validationForm.pseudoValid == true || validationForm.passwordValid == true) {
     
-    let admin = 0;
 
     const putUser = {
-       nom : nomPut.value,
-       prenom : prenomPut.value,
-       pseudo : pseudoPut.value,
-       password : passwordPut.value,
-       admin: admin
-   }
-   
-           fetch(`http://localhost:3000/api/putuser/${user_id}`, {
-               method : "PATCH",
-               body : JSON.stringify(putUser),
-               headers :  {
-                   'Content-Type' : 'application/json',
-                   'Accept' : 'application/json',
-                   'authorization': `Bearer ${token}`
-               },
-           })
-           .then( (res) => { return res.json() })
-           .then(data => {
-            console.log(data);
-            alert('Informations modifiés !')
-           // localStorage.removeItem('token');
-           // localStorage.setItem('token',data.token);
-            localStorage.removeItem('pseudo');
-          
-                localStorage.setItem('pseudo', data.pseudoUpd);
-             location.reload();
+        nom: nomPut.value,
+        prenom: prenomPut.value,
+        pseudo: pseudoPut.value,
+        password: passwordPut.value
+    };
 
-           })
-           .catch( (err) => {
-               alert('Une erreur est survenue :( !' + err)
-               })
+    fetch(`http://localhost:3000/api/putuser/${user_id}`, {
+        method: 'PATCH',
+        body: JSON.stringify(putUser),
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'authorization': `Bearer ${token}`,
+        },
+    })
+        .then((res) => res.json())
+        .then((data) => {
+            console.log(data);
+            alert('Informations modifiées !');
+            localStorage.removeItem('pseudo');
+            localStorage.setItem('pseudo', data.pseudoUpd);
+            location.reload();
+        })
+        .catch((err) => {
+            alert('Une erreur est survenue :(' + err);
+        });
+
+
            let el = document.createElement('div');
            el.innerHTML = '';
 
