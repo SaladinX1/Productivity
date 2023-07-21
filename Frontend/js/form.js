@@ -162,7 +162,8 @@ if ( validationForm.nomValid == true || validationForm.prenomValid == true ||  v
     const putUser = {
         nom: nomPut.value,
         prenom: prenomPut.value,
-        pseudo: pseudoPut.value
+        pseudo: pseudoPut.value,
+        password: passwordPut.value
     };
 
     fetch(`http://localhost:3000/api/putuser/${user_id}`, {

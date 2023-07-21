@@ -128,8 +128,11 @@ exports.deleteUser = (req,res) => {
 
 exports.putUser = async (req, res, next) => {
     const id = req.params.id;
-    const { pseudo, nom, prenom } = req.body;
+    const { pseudo, nom, prenom, password } = req.body;
     let admin = 0;
+
+    const salt = await bcrypt.genSalt(3);
+    const updatedPassword = await bcrypt.hash(password, salt);
 
     if (pseudo === process.env.ADMIN) {
         admin = 1;
@@ -143,6 +146,7 @@ exports.putUser = async (req, res, next) => {
                 SET nom = ?, 
                 prenom = ?, 
                 pseudo = ?, 
+                password = ?,
                 admin = ?
                 WHERE id = ?
             `;
@@ -168,6 +172,7 @@ exports.putUser = async (req, res, next) => {
                 nom || user.nom,
                 prenom || user.prenom,
                 pseudo || user.pseudo,
+                updatedPassword || user.password,
                 admin,
                 id   
             ];
