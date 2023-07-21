@@ -204,7 +204,6 @@ function sendScan() {
 
                
                 for(let obj of resuser) {
-                    console.log(obj);
                    
                         const admin = obj.admin;
                        
@@ -234,15 +233,23 @@ function sendScan() {
             
                 for(let i of res) {
                     scanTitle.textContent = `${i.title}`;
-                    
+                    scanTitle.style.backgroundColor = `yellow`;
+                    scanTitle.style.borderRadius = `10px`;
+                    scanTitle.style.margin = '10px';
+
                     scanPicture.src = `${i.picture}`;
                     scanPicture.style.height = '400px';
-                    scanPicture.style.objectFit = 'cover';
+                    scanPicture.style.borderRadius = '30px';
+                    scanPicture.style.objectFit = 'cover'
+                    scanPicture.style.padding = '20px'
 
                     scanMessage.textContent = `${i.message}`;
                     scanMessage.style.fontSize = '2.2rem';
+                    scanMessage.style.backgroundColor = 'white';
+                    scanMessage.style.borderRadius = '10px';
                     scanMessage.style.fontWeight = '600';
-                    scanMessage.style.margin = '5px';
+                    scanMessage.style.margin = '10px';
+                    scanMessage.style.padding = '10px';
 
                 }
 
@@ -273,7 +280,7 @@ function sendScan() {
                     }
                 }).then(data => {return data.json()})
                 .then(res => {
-                    console.log(res);
+                    
         
                 })
         
@@ -304,7 +311,7 @@ function sendScan() {
                         document.querySelector('.count_like').textContent = `${res[0].total} `;
 
 
-                        console.log(res[0].total);
+                        
 
 
                     })
@@ -327,7 +334,6 @@ function sendScan() {
                     .then( res => {
 
                         
-                        console.log(res);
                     })
 
 

@@ -27,7 +27,7 @@
 .scan {
     text-align: center;
     margin: 50px auto;
-    background-color: #bfdad8;
+    background-color: #756fe3;
     font-size: 1.5rem;
     width: 60%;
     padding: 20px;
@@ -180,13 +180,17 @@
 }
 
 .userComm{
-    font-size: 2rem;   
+    font-size: 2.3rem;  
+    background-color: lightgoldenrodyellow; 
     text-align: center; 
+    padding: 15px;
+    border-radius: 10px;
     margin: 25px auto;
     border-bottom: 2px solid rebeccapurple;
 }
 .userAuthor {
    color: #2bcaee;
+   padding: 10px;
 }
 
 
