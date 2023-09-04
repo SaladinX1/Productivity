@@ -1,19 +1,6 @@
 const mysql = require('mysql2');
 require('dotenv').config(); 
 
-const user = process.env.ROOT;
-const password = process.env.DBPASS;
-
-const createUserSQL = `CREATE USER '${user}'@'localhost' IDENTIFIED BY '${password}';`;
-const grantPrivilegesSQL = `GRANT ALL PRIVILEGES ON *.* TO '${user}'@'localhost';`;
-const flushPrivilegesSQL = 'FLUSH PRIVILEGES;';
-
-function createUser() {
-    return createUserSQL + grantPrivilegesSQL + flushPrivilegesSQL;
-}
-
-createUser();
-
 
 const db = mysql.createConnection({
     host:'localhost',
