@@ -7,6 +7,7 @@ const db = mysql.createConnection({
     host:process.env.HOST,
     database: process.env.DB,
 
+    
     // Remplacer l'username et le passsword par un utilisateur de votre SGBD.
     user: process.env.ROOT, 
     password: process.env.DBPASS
