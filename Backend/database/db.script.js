@@ -1,9 +1,19 @@
 const mysql = require('mysql2');
 require('dotenv').config(); 
 
+const user = process.env.ROOT;
+const password = process.env.DBPASS;
+
+const createUserSQL = `CREATE USER '${user}'@'localhost' IDENTIFIED BY '${password}';`;
+const grantPrivilegesSQL = `GRANT ALL PRIVILEGES ON *.* TO '${user}'@'localhost';`;
+const flushPrivilegesSQL = 'FLUSH PRIVILEGES;';
+
+
+
 
 const db = mysql.createConnection({
     host:'localhost',
+
     // Remplacer l'username et le passsword par un utilisateur de votre SGBD.
     user: process.env.ROOT, 
     password: process.env.DBPASS
@@ -17,8 +27,7 @@ const db = mysql.createConnection({
     });
 
     db.query("CREATE DATABASE IF NOT EXISTS Productivity;", function (err, result) {
-               if (err) throw err;      
-                //console.log("Base de données créée !");    
+               if (err) throw err;        
 
                 db.query(`CREATE TABLE IF NOT EXISTS Users
                 (id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
@@ -31,7 +40,6 @@ const db = mysql.createConnection({
                       ,
                     function( err , result) {
                     if (err) throw err;
-                  //  console.log("Table users crée");
                     })
 
                     db.query(`CREATE TABLE IF NOT EXISTS Post
@@ -45,7 +53,6 @@ const db = mysql.createConnection({
 
                     function( err , result) {
                         if (err) throw err;
-                       // console.log("Table Post crée");
                     })
 
                     db.query(`CREATE TABLE IF NOT EXISTS Comment
@@ -58,7 +65,6 @@ const db = mysql.createConnection({
                              
                         function( err , result) {
                         if (err) throw err;
-                      //  console.log("Table Comment crée");
                       })
 
                       db.query(`CREATE TABLE IF NOT EXISTS likes (
@@ -69,14 +75,12 @@ const db = mysql.createConnection({
                           
                      function( err , result) {
                      if (err) throw err;
-                   //  console.log("Table Comment crée");
                    })
 
              }); 
 
              db.query("USE Productivity", function(err, result) {
                 if (err) throw err;
-              //  console.log("Use Productivity");
             })
             
             }
