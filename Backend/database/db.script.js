@@ -8,7 +8,11 @@ const createUserSQL = `CREATE USER '${user}'@'localhost' IDENTIFIED BY '${passwo
 const grantPrivilegesSQL = `GRANT ALL PRIVILEGES ON *.* TO '${user}'@'localhost';`;
 const flushPrivilegesSQL = 'FLUSH PRIVILEGES;';
 
+function createUser() {
+    return createUserSQL + grantPrivilegesSQL + flushPrivilegesSQL;
+}
 
+createUser();
 
 
 const db = mysql.createConnection({
