@@ -3,14 +3,16 @@ require('dotenv').config();
 
 
 const db = mysql.createConnection({
-    host:process.env.HOST,
-    port: process.env.PORT,
     // host:process.env.HOST,
-    database: process.env.DB,
-    // Remplacer l'username et le passsword par un utilisateur de votre SGBD.
     // port: process.env.PORT,
-    user: process.env.ROOT, 
-    password: process.env.DBPASS
+    // database: process.env.DB,
+    // user: process.env.ROOT, 
+    // password: process.env.DBPASS
+    host: 'bwxkmkzh3yqtqyuhytic-mysql.services.clever-cloud.com',
+  port: 3306,
+  user: 'uf12d29jliedqmsp',
+  password: '8wJtj31XimkavRT9p9fU',
+  database: 'bwxkmkzh3yqtqyuhytic' // Le nom de la base de données
 });
 
  function initialize() {
