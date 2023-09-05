@@ -1,16 +1,15 @@
+#!/usr/bin/env node
+
+
 const app = require('./app');
 const http = require('http');
 const server = http.createServer(app);
-
-server.listen(3000, () => {
+server.listen(process.env.APPPORT || 3000 , () => {
     console.log('Congrats , the server is listening on port 3000');
 });
 
-app.use((req, res, next) => {
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization');
-    res.setHeader('Access-Control-Allow-Methods', 'PATCH, PUT, GET, POST, DELETE, HEAD');
-    next();
-});
+app.get('/health', (req, res, next) => {
+    console.log('your app is Working');
+})
 
 module.exports = app;
