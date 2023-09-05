@@ -3,16 +3,12 @@ require('dotenv').config();
 
 
 const db = mysql.createConnection({
-    // host:process.env.HOST,
-    // port: process.env.PORT,
-    // database: process.env.DB,
-    // user: process.env.ROOT, 
-    // password: process.env.DBPASS
-    host: 'bwxkmkzh3yqtqyuhytic-mysql.services.clever-cloud.com',
-  port: 3306,
-  user: 'uf12d29jliedqmsp',
-  password: '8wJtj31XimkavRT9p9fU',
-  database: 'bwxkmkzh3yqtqyuhytic' // Le nom de la base de données
+    host:process.env.HOST,
+    port: process.env.PORT,
+    database: process.env.DB,
+    user: process.env.ROOT, 
+    password: process.env.DBPASS
+   
 });
 
  function initialize() {
@@ -22,10 +18,9 @@ const db = mysql.createConnection({
     console.log("Connected");
     });
 
-    db.query("CREATE DATABASE IF NOT EXISTS Productivity;", function (err, result) {
-               if (err) throw err;        
+   
 
-                db.query(`CREATE TABLE IF NOT EXISTS Users
+                db.query(`CREATE TABLE Users
                 (id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
                     nom VARCHAR(255) NOT NULL,
                     prenom VARCHAR(255) NOT NULL,
@@ -38,7 +33,7 @@ const db = mysql.createConnection({
                     if (err) throw err;
                     })
 
-                    db.query(`CREATE TABLE IF NOT EXISTS Post
+                    db.query(`CREATE TABLE Post
                                 (id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
                                      title VARCHAR(255) NOT NULL,
                                       picture VARCHAR(255),
@@ -51,7 +46,7 @@ const db = mysql.createConnection({
                         if (err) throw err;
                     })
 
-                    db.query(`CREATE TABLE IF NOT EXISTS Comment
+                    db.query(`CREATE TABLE Comment
                          (id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
                             pseudo_user VARCHAR(255),
                             FOREIGN KEY (pseudo_user) REFERENCES Users(pseudo) ON DELETE CASCADE,
@@ -63,7 +58,7 @@ const db = mysql.createConnection({
                         if (err) throw err;
                       })
 
-                      db.query(`CREATE TABLE IF NOT EXISTS likes (
+                      db.query(`CREATE TABLE likes (
   user_id INT NOT NULL,
   FOREIGN KEY (user_id) REFERENCES Users(id) ON DELETE CASCADE,
   post_id INT NOT NULL,
@@ -73,9 +68,9 @@ const db = mysql.createConnection({
                      if (err) throw err;
                    })
 
-             }); 
+            
 
-             db.query("USE Productivity", function(err, result) {
+             db.query("USE bwxkmkzh3yqtqyuhytic", function(err, result) {
                 if (err) throw err;
             })
             
