@@ -20,7 +20,7 @@ const db = mysql.createConnection({
 
    
 
-                db.query(`CREATE TABLE Users
+                db.query(`CREATE TABLE IF NOT EXISTS Users
                 (id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
                     nom VARCHAR(255) NOT NULL,
                     prenom VARCHAR(255) NOT NULL,
@@ -33,7 +33,7 @@ const db = mysql.createConnection({
                     if (err) throw err;
                     })
 
-                    db.query(`CREATE TABLE Post
+                    db.query(`CREATE TABLE IF NOT EXISTS Post
                                 (id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
                                      title VARCHAR(255) NOT NULL,
                                       picture VARCHAR(255),
@@ -46,7 +46,7 @@ const db = mysql.createConnection({
                         if (err) throw err;
                     })
 
-                    db.query(`CREATE TABLE Comment
+                    db.query(`CREATE TABLE IF NOT EXISTS Comment
                          (id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
                             pseudo_user VARCHAR(255),
                             FOREIGN KEY (pseudo_user) REFERENCES Users(pseudo) ON DELETE CASCADE,
@@ -58,7 +58,7 @@ const db = mysql.createConnection({
                         if (err) throw err;
                       })
 
-                      db.query(`CREATE TABLE likes (
+                      db.query(`CREATE TABLE IF NOT EXISTS likes (
   user_id INT NOT NULL,
   FOREIGN KEY (user_id) REFERENCES Users(id) ON DELETE CASCADE,
   post_id INT NOT NULL,
