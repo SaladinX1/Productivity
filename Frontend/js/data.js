@@ -52,6 +52,7 @@ function deleteAccount() {
     .then(res => {
         console.log(res);
         alert('Votre compte à été suprimé !');
+        localStorage.clear();
         location.replace('/index.html');
         
     })
@@ -185,10 +186,6 @@ function sendScan() {
             const id = localStorage.getItem('post_id');
 
            
-          
-           
-           
-        
             //////////////// GESTION RECUPERATION ID DATA /////////////////
             fetch(`http://localhost:3000/api/post/${id}`, {
                 method:'GET',
@@ -201,6 +198,7 @@ function sendScan() {
             .then(data => {return data.json()})
             .then(res => {
 
+                console.log(res);
 
                
                 for(let obj of resuser) {
@@ -229,7 +227,6 @@ function sendScan() {
                 const cancelOverlayDelete = document.querySelector('.cancelDeleteScan');
                 const btnDeleteScan = document.querySelector('.deleteScan');
     
-              //  const btnPutScan = document.querySelector('.scan__btnScanGestionA--putScan');
             
                 for(let i of res) {
                     scanTitle.textContent = `${i.title}`;
@@ -238,6 +235,7 @@ function sendScan() {
                     scanTitle.style.margin = '10px';
 
                     scanPicture.src = `${i.picture}`;
+                  //  console.log(i.picture);
                     scanPicture.style.height = '400px';
                     scanPicture.style.borderRadius = '30px';
                     scanPicture.style.objectFit = 'cover'
@@ -386,23 +384,23 @@ function sendScan() {
                     e.preventDefault();
           
     
-                    const titleInput = document.querySelector('#titlePut').value;
-                    const messageInput = document.querySelector('#messagePut').value;
-    
+                    const title = document.querySelector('#titlePut').value;
+                    const message = document.querySelector('#messagePut').value;
+                
 
                     let putScan = {
-                        title: titleInput,
-                        message: messageInput
+                        title: title,
+                        message: message
                     }
-                    // || pictureInput != ''
-                    if( titleInput != '' || messageInput != '') {
+                   
+                    if( title != ''  || message != '') {
                         
                         fetch(`http://localhost:3000/api/putpost/${id}`, {
                             method: 'PATCH',
                             body: JSON.stringify(putScan),
                             headers: {
+                                'content-type' : 'application/json',
                                 'accept': 'application/json',
-                                'content-type': 'application/json',
                                 'authorization': `Bearer ${token}`
                             }
                         })
@@ -507,9 +505,6 @@ function sendScan() {
                                                                                 }
 
 
-                                                                            
-                                                                           
-                                                                                    
 
 
                     document.querySelectorAll('.putCommentBtn').forEach(com => {
@@ -529,8 +524,7 @@ function sendScan() {
     
                     document.querySelectorAll('.overlayAddComment__cancelCommentbtn').forEach(cancel => {
                         cancel.addEventListener('click', (e) => {
-                           // document.querySelector('#commentToAdd').textContent = '';
-                          // const userCommPutComment = target.parentElement.querySelector('.userComm__putComment');
+                          
                           document.querySelectorAll('#putCommentContent').forEach(content => {
                               content.value = '';
                             });
@@ -661,19 +655,6 @@ function sendScan() {
             formComment.addEventListener('submit', (e) => {
             e.preventDefault();
 
-
-            // if (e.target.classList.contains('overlayAddComment__commentForm')) {
-            //     let putComment = e.target.querySelector('#putCommentContent').value;
-            //     let idComment = e.target.parentElement.parentElement.getAttribute('data-id');
-            //     let post_id = localStorage.getItem('post_id');
-            //     if (putComment === '') {
-            //       document.querySelector('.errPutComment').textContent = 'Veuillez écrire quelque chose ..., merci.';
-            //       document.querySelector('.errPutComment').style.color = 'red';
-            //       document.querySelector('.errPutComment').style.fontSize = '1.5rem';
-            //       setTimeout(() => {
-            //         document.querySelector('.errPutComment').textContent = ''
-            //       }, 1800)
-            //     }}
     
                 let sendMessage = document.querySelector('#commentToAdd').value;
                 let pseudo = localStorage.getItem('pseudo');
