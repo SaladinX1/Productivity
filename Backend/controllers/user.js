@@ -43,9 +43,6 @@ let { admin, pseudo, mail, nom, prenom } = req.body;
     }
 }
 
-// function generateRefreshToken() {
-//   jwt.sign()
-// }
 
 exports.login = (req, res, next) =>  {
 
@@ -140,7 +137,6 @@ exports.putUser = async (req, res, next) => {
 
     try {
 
-
             const updateQuery = `
                 UPDATE Users 
                 SET nom = ?, 
@@ -155,17 +151,23 @@ exports.putUser = async (req, res, next) => {
             const getUserValues = [req.params.id];
 
             db.query(getUserQuery, getUserValues, (getUserError, getUserResults) => {
-                // if (getUserError || getUserResults.length === 0) {
-                //     return res.status(404).json({ message: 'Utilisateur non trouvé !' });
-                // }
+             
                 const user = getUserResults[0];
 
-                db.query('DELETE FROM comment WHERE pseudo_user = ?', [user.pseudo], (err, result) => {
-                    if (err) {
-                        console.log(err);
-                        return res.status(400).json({ message: 'Mauvaise requête !' });
+                db.query('SELECT * FROM comment Where pseudo_user = ?', [user.pseudo], (err, result) => {
+                    if (!result) {
+                        return;
+                    } else {
+
+                        db.query('DELETE FROM comment WHERE pseudo_user = ?', [user.pseudo], (err, result) => {
+                            if (err) {
+                                console.log(err);
+                                return res.status(400).json({ message: 'Mauvaise requête !' });
+                            }
+                        });
+
                     }
-                });
+                })
 
                 
             const updateValues = [
@@ -186,7 +188,7 @@ exports.putUser = async (req, res, next) => {
                         message: 'Bravo ! Vos données ont été modifiées !',
                         token: jwt.sign({ id: user.id }, process.env.TOKEN, { expiresIn: '24h' }),
                         id: user.id,
-                        pseudoUpd: pseudo, // Assuming you want to send the updated pseudo back
+                        pseudoUpd: pseudo
                     });
                 }
                 
