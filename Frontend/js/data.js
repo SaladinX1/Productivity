@@ -77,9 +77,9 @@ function deleteAccount() {
     .then(res => { return res.json()})
     .then(data => {
 
+       
       
         for(let info of data) {
-         
             blog.innerHTML += `
             <div class='fil__blog--post' data-id='${info.id}'>
                     <h1>${info.title}</h1>
@@ -182,7 +182,7 @@ function sendScan() {
         })
         .then(data => {return data.json()})
         .then(resuser => {
-
+            console.log(resuser);
             const id = localStorage.getItem('post_id');
 
            
@@ -199,6 +199,21 @@ function sendScan() {
             .then(res => {
 
                 console.log(res);
+
+                 const auteur = document.querySelector('.scan > h3'); 
+                    for (let i of resuser) {
+                        if(i.pseudo) {
+                            auteur.textContent = `Auteur: ${i.pseudo}`;
+                        }
+                        
+                    } 
+                    auteur.style.backgroundColor = 'yellowgreen';
+                    auteur.style.textAlign = 'left';
+                    auteur.style.width = '50%';
+                    auteur.style.borderRadius = '10px';
+                    auteur.style.padding = '10px';
+
+
 
                
                 for(let obj of resuser) {
@@ -235,7 +250,6 @@ function sendScan() {
                     scanTitle.style.margin = '10px';
 
                     scanPicture.src = `${i.picture}`;
-                  //  console.log(i.picture);
                     scanPicture.style.height = '400px';
                     scanPicture.style.borderRadius = '30px';
                     scanPicture.style.objectFit = 'cover'
@@ -248,17 +262,14 @@ function sendScan() {
                     scanMessage.style.fontWeight = '600';
                     scanMessage.style.margin = '10px';
                     scanMessage.style.padding = '10px';
-
                 }
 
+                   
                 //////////////////////// GESTION LIKE  POST ////////////////////
 
                 const likeBtn = document.querySelector('.scan__btnLikeUnlike--like');
-              
 
                 ///////////////// LIKE /////////////////////
-
-              
 
                 likeBtn.addEventListener('click', () => {
 
